@@ -39,7 +39,7 @@ public class GroupCreationTests {
     public void testGroupCreation() throws Exception {
         gotoGroupPage();
         initGroupCreation();
-        fillGroupForm(new GroupData("test", "test1"));
+        fillGroupForm(new GroupData("name", "header","footer"));
         driver.findElement(By.name("submit")).click();
         returnToGroupPage();
     }
@@ -56,6 +56,10 @@ public class GroupCreationTests {
         driver.findElement(By.name("group_header")).click();
         driver.findElement(By.name("group_header")).clear();
         driver.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
+        driver.findElement(By.name("group_footer")).click();
+        driver.findElement(By.name("group_footer")).clear();
+        driver.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
+
     }
 
     private void initGroupCreation() {
