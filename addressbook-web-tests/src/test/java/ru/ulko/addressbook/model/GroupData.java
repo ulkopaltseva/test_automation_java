@@ -1,4 +1,4 @@
-package ru.ulko.addressbook;
+package ru.ulko.addressbook.model;
 
 public class GroupData {
     private final String name;

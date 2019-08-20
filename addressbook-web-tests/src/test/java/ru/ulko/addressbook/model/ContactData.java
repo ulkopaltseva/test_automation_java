@@ -1,4 +1,4 @@
-package ru.ulko.addressbook;
+package ru.ulko.addressbook.model;
 
 public class ContactData {
     private final String firstName;
