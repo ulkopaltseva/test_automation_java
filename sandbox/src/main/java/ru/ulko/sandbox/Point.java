@@ -24,4 +24,13 @@ public class Point {
         return String.valueOf(getX()) + "," + String.valueOf(getY());
     }
 
+    public double distance (Point p1, Point p2){
+        double xa = p1.getX();
+        double xb = p2.getX();
+        double ya = p1.getY();
+        double yb = p2.getY();
+
+        return Math.sqrt((Math.pow((xb-xa), 2) + Math.pow((yb-ya), 2)));
+    }
+
 }

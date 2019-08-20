@@ -8,6 +8,8 @@ class MyFirstProgram {
 		Point p1 = new Point(2,3);
 		Point p2 = new Point(5,6);
 		System.out.println("Расстрояние между двумя точками P1(" + p1.getXY() + ") и P2(" + p2.getXY() + ") равно " + distance(p1, p2));
+		System.out.println("Расстрояние между двумя точками P1(" + p1.getXY() + ") и P2(" + p2.getXY() + ") равно " + p1.distance(p1, p2));
+		System.out.println("Расстрояние между двумя точками P1(" + p1.getXY() + ") и P2(" + p2.getXY() + ") равно " + p2.distance(p1, p2));
 
 		Square s = new Square(5);
 		System.out.println("Площадь квадрата со стороной " + s.l + " = " + s.area());
