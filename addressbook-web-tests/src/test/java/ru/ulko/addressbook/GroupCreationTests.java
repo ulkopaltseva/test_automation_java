@@ -1,6 +1,5 @@
 package ru.ulko.addressbook;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.*;
@@ -9,7 +8,6 @@ import static org.testng.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class GroupCreationTests {
     private WebDriver driver;
@@ -24,32 +22,48 @@ public class GroupCreationTests {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //открытие страницы логина addressbook
         driver.get("http://localhost/addressbook/");
+        login("admin", "secret");
+    }
 
-        //ввод логина и пароля
+    private void login(String user, String password) {
         driver.findElement(By.name("user")).clear();
-        driver.findElement(By.name("user")).sendKeys("admin");
+        driver.findElement(By.name("user")).sendKeys(user);
         driver.findElement(By.id("LoginForm")).click();
         driver.findElement(By.name("pass")).click();
         driver.findElement(By.name("pass")).clear();
-        driver.findElement(By.name("pass")).sendKeys("secret");
-
-        //нажатие на кнопку "Enter"
+        driver.findElement(By.name("pass")).sendKeys(password);
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password:'])[1]/following::input[2]")).click();
     }
 
     @Test
     public void testGroupCreation() throws Exception {
-        driver.findElement(By.linkText("groups")).click();
-        driver.findElement(By.name("new")).click();
-        driver.findElement(By.name("group_name")).click();
-        driver.findElement(By.name("group_name")).clear();
-        driver.findElement(By.name("group_name")).sendKeys("test");
-        driver.findElement(By.name("group_header")).click();
-        driver.findElement(By.name("group_header")).clear();
-        driver.findElement(By.name("group_header")).sendKeys("test1");
+        gotoGroupPage();
+        initGroupCreation();
+        fillGroupForm(new GroupData("test", "test1"));
         driver.findElement(By.name("submit")).click();
+        returnToGroupPage();
+    }
+
+    private void returnToGroupPage() {
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Groups'])[1]/following::div[1]")).click();
         driver.findElement(By.linkText("group page")).click();
+    }
+
+    private void fillGroupForm(GroupData groupData) {
+        driver.findElement(By.name("group_name")).click();
+        driver.findElement(By.name("group_name")).clear();
+        driver.findElement(By.name("group_name")).sendKeys(groupData.getName());
+        driver.findElement(By.name("group_header")).click();
+        driver.findElement(By.name("group_header")).clear();
+        driver.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
+    }
+
+    private void initGroupCreation() {
+        driver.findElement(By.name("new")).click();
+    }
+
+    private void gotoGroupPage() {
+        driver.findElement(By.linkText("groups")).click();
     }
 
     @AfterClass(alwaysRun = true)
