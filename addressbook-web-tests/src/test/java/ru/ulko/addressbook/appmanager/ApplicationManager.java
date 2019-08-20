@@ -50,6 +50,10 @@ public class ApplicationManager {
         return navigationHelper;
     }
 
+    public ContactHelper getContactHelper() {
+        return contactHelper;
+    }
+
     public boolean isElementPresent(By by) {
         try {
             driver.findElement(by);
