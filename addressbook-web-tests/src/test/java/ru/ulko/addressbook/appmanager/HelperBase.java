@@ -13,10 +13,12 @@ public class HelperBase {
         this.driver = driver;
     }
 
-    protected void type(By locator, String name) {
+    protected void type(By locator, String text) {
         click(locator);
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(name);
+        if (text != null) {
+            driver.findElement(locator).clear();
+            driver.findElement(locator).sendKeys(text);
+        } else {}
     }
 
     protected void click(By locator) {
