@@ -40,6 +40,10 @@ public class ApplicationManager {
         }
     }
 
+    public void closeAlert(){
+        driver.switchTo().alert().accept();
+    }
+
 
     public GroupHelper getGroupHelper() {
         return groupHelper;

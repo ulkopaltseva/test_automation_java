@@ -36,5 +36,15 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public void gotoHomePage() {
+        click(By.linkText("home"));
+    }
 
+    public void selectContact() {
+        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Last Name'])[1]/preceding::input[1]"));
+    }
+
+    public void deleteSelectedContact() {
+        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Select all'])[1]/following::input[2]"));
+    }
 }
