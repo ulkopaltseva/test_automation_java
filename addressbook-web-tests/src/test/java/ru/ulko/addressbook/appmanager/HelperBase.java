@@ -6,7 +6,7 @@ import org.openqa.selenium.*;
  * Created by yulia on 21.08.2019.
  */
 public class HelperBase {
-    protected WebDriver driver;
+    private WebDriver driver;
     public boolean acceptNextAlert = true;
 
     public HelperBase(WebDriver driver) {
