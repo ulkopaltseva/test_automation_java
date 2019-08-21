@@ -10,7 +10,7 @@ import ru.ulko.addressbook.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+    protected final ApplicationManager app = new ApplicationManager(BrowserType.IEXPLORE);
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
