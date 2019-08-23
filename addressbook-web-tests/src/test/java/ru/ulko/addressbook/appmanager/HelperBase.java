@@ -60,4 +60,10 @@ public class HelperBase {
             acceptNextAlert = true;
         }
     }
+
+    public WebDriver getDriver(){
+        return this.driver;
+    }
+
+
 }

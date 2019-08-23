@@ -2,12 +2,15 @@ package ru.ulko.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.ulko.addressbook.model.ContactData;
 
 /**
  * Created by yulia on 20.08.2019.
  */
 public class ContactHelper extends HelperBase {
+
 
     public ContactHelper(WebDriver driver) {
         super(driver);
@@ -22,7 +25,7 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void fillContactData(ContactData contactData) {
+    public void fillContactData(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("address"), contactData.getAddress());
@@ -33,12 +36,14 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail1());
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
+        if (creation == true){
+            new Select(getDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else
+        {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
-
-    public void gotoHomePage() {
-        click(By.linkText("home"));
-    }
 
     public void selectContact() {
         click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Last Name'])[1]/preceding::input[1]"));
