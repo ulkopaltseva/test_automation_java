@@ -20,8 +20,12 @@ public class Collectiions {
 
         List<String> languages = Arrays.asList("Java", "C#", "Python", "PHP");
 
-        for (String l: languages) {
+        /*for (String l: languages) {
             System.out.println("Я хочу научиться программировать на " + l);
+        }*/
+
+        for (int i = 0; i < languages.size(); i++) {
+            System.out.println("Я хочу научиться программировать на " + languages.get(i));
         }
     }
 }
