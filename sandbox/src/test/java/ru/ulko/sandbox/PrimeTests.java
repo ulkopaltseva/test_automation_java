@@ -27,4 +27,10 @@ public class PrimeTests {
     public void testNonPrimeWhile(){
         Assert.assertFalse(Primes.isPrimeWhile(Integer.MAX_VALUE - 1));
     }
+
+    @Test
+    public void testPrimeForLong(){
+        long n = Integer.MAX_VALUE;
+        Assert.assertTrue(Primes.isPrimeFor(n));
+    }
 }

@@ -22,4 +22,13 @@ public class Primes {
         }
         return i == n;
     }
+
+    public static boolean isPrimeFor(long n) {
+        for (int i = 2; i < n; i++){
+            if (n % i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
 }
