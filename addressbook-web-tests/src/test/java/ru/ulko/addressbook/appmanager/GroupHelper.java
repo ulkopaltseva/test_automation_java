@@ -2,6 +2,7 @@ package ru.ulko.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import ru.ulko.addressbook.model.GroupData;
 
 /**
@@ -45,10 +46,13 @@ public class GroupHelper extends HelperBase {
     }
 
     public void createGroup(GroupData group) {
+        int before = getDriver().findElements(By.name("selected[]")).size();
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
         returnGroupPage();
+        int after = getDriver().findElements(By.name("selected[]")).size();
+        Assert.assertEquals(after, before + 1);
     }
 
     private void returnGroupPage() {
