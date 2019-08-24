@@ -18,17 +18,17 @@ public class PrimeTests {
         Assert.assertFalse(Primes.isPrimeFor(Integer.MAX_VALUE - 1));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testPrimeWhile(){
         Assert.assertTrue(Primes.isPrimeWhile(Integer.MAX_VALUE));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testNonPrimeWhile(){
         Assert.assertFalse(Primes.isPrimeWhile(Integer.MAX_VALUE - 1));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testPrimeForLong(){
         long n = Integer.MAX_VALUE;
         Assert.assertTrue(Primes.isPrimeFor(n));
