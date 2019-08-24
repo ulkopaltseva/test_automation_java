@@ -10,12 +10,12 @@ public class PrimeTests {
 
     @Test
     public void testPrimeFor(){
-        Assert.assertTrue(Primes.isPrimeFor(Integer.MAX_VALUE));
+        Assert.assertTrue(Primes.isPrimeForVeryFast(Integer.MAX_VALUE));
     }
 
     @Test
     public void testNonPrimeFor(){
-        Assert.assertFalse(Primes.isPrimeFor(Integer.MAX_VALUE - 1));
+        Assert.assertFalse(Primes.isPrimeForVeryFast(Integer.MAX_VALUE - 1));
     }
 
     @Test(enabled = false)
