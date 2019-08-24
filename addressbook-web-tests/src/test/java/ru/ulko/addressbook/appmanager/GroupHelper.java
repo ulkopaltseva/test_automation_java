@@ -49,10 +49,9 @@ public class GroupHelper extends HelperBase {
         fillGroupForm(group);
         submitGroupCreation();
         returnGroupPage();
-        int after = getDriver().findElements(By.name("selected[]")).size();
     }
 
-    private void returnGroupPage() {
+    public void returnGroupPage() {
         click(By.linkText("group page"));
     }
 
