@@ -60,4 +60,19 @@ public class ContactHelper extends HelperBase {
     public void submitModificationContact() {
         click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]"));
     }
+
+    public void createContact(ContactData contact) {
+        initCreateContact();
+        fillContactData(contact, true);
+        submitCreationContact();
+        returnHomePage();
+    }
+
+    private void returnHomePage() {
+        click(By.linkText("home page"));
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Last Name'])[1]/preceding::input[1]"));
+    }
 }
