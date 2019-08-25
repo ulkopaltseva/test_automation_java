@@ -32,7 +32,7 @@ public class ApplicationManager {
             driver = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
             driver = new ChromeDriver();
-        } else if (browser.equals(BrowserType.IEXPLORE)){
+        } else if (browser.equals(BrowserType.IEXPLORE)) {
             driver = new InternetExplorerDriver();
         }
         baseUrl = "https://www.katalon.com/";
@@ -54,7 +54,7 @@ public class ApplicationManager {
         }
     }
 
-    public void closeAlert(){
+    public void closeAlert() {
         driver.switchTo().alert().accept();
     }
 

@@ -12,7 +12,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         app.getNavigationHelper().gotoHomePage();
-        if (! app.getContactHelper().isThereAContact()){
+        if (!app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactData("First name", "Last Name", "8 sovet street, 31", "home phone", "monib phone", "work phone", "fax phone", "email", "email2", null, "test"));
         }
         int before = app.getContactHelper().getContactCount();
@@ -23,5 +23,7 @@ public class ContactModificationTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         int after = app.getContactHelper().getContactCount();
         Assert.assertEquals(after, before);
+
+
     }
 }

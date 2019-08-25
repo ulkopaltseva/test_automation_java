@@ -17,7 +17,7 @@ public class HelperBase {
         click(locator);
         if (text != null) {
             String existingText = driver.findElement(locator).getAttribute("value");
-            if (! text.equals(existingText)) {
+            if (!text.equals(existingText)) {
                 driver.findElement(locator).clear();
                 driver.findElement(locator).sendKeys(text);
             }
@@ -61,7 +61,7 @@ public class HelperBase {
         }
     }
 
-    public WebDriver getDriver(){
+    public WebDriver getDriver() {
         return this.driver;
     }
 

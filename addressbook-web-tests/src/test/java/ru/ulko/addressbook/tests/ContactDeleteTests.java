@@ -12,10 +12,9 @@ import java.util.concurrent.TimeUnit;
 public class ContactDeleteTests extends TestBase {
 
     @Test
-    public void testContactDelete(){
+    public void testContactDelete() {
         app.getNavigationHelper().gotoHomePage();
-        if (! app.getContactHelper().isThereAContact())
-        {
+        if (!app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactData("First name", "Last Name", "8 sovet street, 31", "home phone", "monib phone", "work phone", "fax phone", "email", "email2", null, "test"));
         }
         app.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);

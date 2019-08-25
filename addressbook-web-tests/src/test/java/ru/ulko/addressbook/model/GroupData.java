@@ -19,7 +19,9 @@ public class GroupData {
         return header;
     }
 
-    public String getFooter() { return footer; }
+    public String getFooter() {
+        return footer;
+    }
 
     @Override
     public boolean equals(Object o) {

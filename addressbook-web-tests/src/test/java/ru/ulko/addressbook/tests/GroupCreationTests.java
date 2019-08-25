@@ -1,11 +1,9 @@
 package ru.ulko.addressbook.tests;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
-
+import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GroupCreationTests extends TestBase {
