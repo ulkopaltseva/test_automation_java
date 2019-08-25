@@ -12,7 +12,6 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation() throws Exception {
     app.getNavigationHelper().gotoGroupPage();
     if (app.getGroupHelper().getGroupCount() == 0) {
-      app.getNavigationHelper().gotoGroupPage();
       app.getGroupHelper().createGroup(new GroupData("test", "header", "footer"));
     }
     app.getNavigationHelper().gotoHomePage();

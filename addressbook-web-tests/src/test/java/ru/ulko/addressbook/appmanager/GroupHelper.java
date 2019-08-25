@@ -53,6 +53,7 @@ public class GroupHelper extends HelperBase {
         returnGroupPage();
     }
 
+
     public void returnGroupPage() {
         click(By.linkText("group page"));
     }
