@@ -28,6 +28,7 @@ public class ApplicationManager {
     }
 
     public void init() {
+        // выбрать браузер для запуска тестов
         if (browser.equals(BrowserType.FIREFOX)) {
             driver = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
@@ -36,16 +37,23 @@ public class ApplicationManager {
             driver = new InternetExplorerDriver();
         }
         baseUrl = "https://www.katalon.com/";
+
+        // имплицидное ожидание - ожидание, если страница не сразу прогрузилась
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+
+        // с какой страницы начать запуск тестов
         driver.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
         sessionHelper = new SessionHelper(driver);
         contactHelper = new ContactHelper(driver);
+
+        // залогиниться на сайте
         sessionHelper.login("admin", "secret");
     }
 
 
+    // закончить работу с веб-драйвером
     public void stop() {
         driver.quit();
         String verificationErrorString = verificationErrors.toString();
@@ -54,6 +62,7 @@ public class ApplicationManager {
         }
     }
 
+    // метод для выбора "да" во всплывающем окне
     public void closeAlert() {
         driver.switchTo().alert().accept();
     }
