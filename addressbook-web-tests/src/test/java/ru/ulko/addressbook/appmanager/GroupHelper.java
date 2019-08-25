@@ -30,6 +30,8 @@ public class GroupHelper extends HelperBase {
 
     public void deleteSelectedGroups() {
         click(By.name("delete"));
+        returnGroupPage();
+
     }
 
     public void selectGroup() {
@@ -63,7 +65,12 @@ public class GroupHelper extends HelperBase {
         return getDriver().findElements(By.name("selected[]")).size();
     }
 
-    public void gotoGroupPage() {
-        click(By.linkText("groups"));
+
+    public void modificateGroup(GroupData groupData) {
+        selectGroup();
+        initGroupModification();
+        fillGroupForm(groupData);
+        submitGroupModification();
+        returnGroupPage();
     }
 }

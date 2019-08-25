@@ -46,7 +46,7 @@ public class ContactHelper extends HelperBase {
 
 
     public void selectContact() {
-        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Last Name'])[1]/preceding::input[1]"));
+        click(By.name("selected[]"));
     }
 
     public void deleteSelectedContact() {
@@ -54,11 +54,11 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initModificationContact() {
-        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='homephonemonibphoneworkphone'])[1]/following::img[2]"));
+        click(By.name("selected[]"));
     }
 
     public void submitModificationContact() {
-        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]"));
+        click(By.name("selected[]"));
     }
 
     public void createContact(ContactData contact) {
@@ -73,6 +73,10 @@ public class ContactHelper extends HelperBase {
     }
 
     public boolean isThereAContact() {
-        return isElementPresent(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Last Name'])[1]/preceding::input[1]"));
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCount() {
+        return getDriver().findElements(By.name("selected[]")).size();
     }
 }
