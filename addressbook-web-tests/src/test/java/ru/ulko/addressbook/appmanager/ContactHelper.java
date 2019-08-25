@@ -54,11 +54,11 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initModificationContact() {
-        click(By.name("selected[]"));
+        click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void submitModificationContact() {
-        click(By.name("selected[]"));
+        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Edit / add address book entry'])[1]/following::div[1]"));
     }
 
     public void createContact(ContactData contact) {
@@ -68,7 +68,7 @@ public class ContactHelper extends HelperBase {
         returnHomePage();
     }
 
-    private void returnHomePage() {
+    public void returnHomePage() {
         click(By.linkText("home page"));
     }
 
