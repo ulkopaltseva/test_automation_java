@@ -66,11 +66,15 @@ public class GroupHelper extends HelperBase {
     }
 
 
-    public void modificateGroup(GroupData groupData) {
-        selectGroup();
+    public void modificateGroup(GroupData groupData, int index) {
+        selectGroup(index);
         initGroupModification();
         fillGroupForm(groupData);
         submitGroupModification();
         returnGroupPage();
+    }
+
+    public void selectGroup(int index) {
+        getDriver().findElements(By.name("selected[]")).get(index).click();
     }
 }
