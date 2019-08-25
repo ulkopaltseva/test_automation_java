@@ -13,6 +13,7 @@ public class HelperBase {
         this.driver = driver;
     }
 
+    // метод для заполнения полей ввода
     protected void type(By locator, String text) {
         click(locator);
         if (text != null) {
@@ -24,10 +25,13 @@ public class HelperBase {
         }
     }
 
+    // метод для клика по элементу с определенным локатором
     protected void click(By locator) {
         driver.findElement(locator).click();
     }
 
+
+    // метод для проверки, есть ли на странице определенный элемент
     public boolean isElementPresent(By by) {
         try {
             driver.findElement(by);
@@ -61,6 +65,7 @@ public class HelperBase {
         }
     }
 
+    // метод для доступа к веб-драйверу из тестов
     public WebDriver getDriver() {
         return this.driver;
     }
