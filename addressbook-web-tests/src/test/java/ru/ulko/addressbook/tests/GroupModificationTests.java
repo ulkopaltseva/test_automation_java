@@ -14,23 +14,35 @@ public class GroupModificationTests extends TestBase {
 
     @Test
     public void testGroupModification() {
+        // переход на страницу группы
         app.getNavigationHelper().gotoGroupPage();
+
+        // проверяется, есть ли хоть одна группа на странице, иначе создается новую
         if (!app.getGroupHelper().isThereAGroup()) {
             app.getGroupHelper().createGroup(new GroupData("test", "HEADER", "FOOTER"));
         }
+
+        // создается список before и заполняется списком текущих групп
         List<GroupData> before = app.getGroupHelper().getGroupList();
+
+        // создается объект group, которым будет модифицированна группа
         GroupData group = new GroupData("test", "HEADER", "FOOTER");
+
+        // вызывается метод модификации для последней в списке группы
         app.getGroupHelper().modificateGroup(group, before.size() - 1);
+
+        // создается список after и заполняется получившимся после модификации списком групп
         List<GroupData> after = app.getGroupHelper().getGroupList();
+        // сравниваем количество групп до и после модификации - должно совпадать
         Assert.assertEquals(after.size(), before.size());
 
-        //удаляем элемент в списке before, который мы модифицировали
+        // удаляется элемент в списке before, который был модифицирован
         before.remove(before.size() - 1);
 
-        //добавляем новый объект, которым мы заменяли модифицируемый - group
+        // добавляется новый объект, которым заменяется модифицируемый - group
         before.add(group);
 
-        //сравниваем списки before и after, предворительно преобразовав их в множества - HashSet<Object>
+        // сравниваются списки before и after, предворительно преобразовав их в множества - HashSet<Object>
         Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
 
     }

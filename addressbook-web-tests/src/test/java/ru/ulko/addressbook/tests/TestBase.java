@@ -12,12 +12,14 @@ public class TestBase {
 
     protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
+    // это выполняется перед каждым тестом
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
         app.init();
     }
 
     @AfterClass
+    // это выполняется после каждого теста
     public void tearDown() throws Exception {
         app.stop();
     }

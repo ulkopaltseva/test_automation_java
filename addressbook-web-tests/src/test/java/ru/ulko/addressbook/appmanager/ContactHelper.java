@@ -60,6 +60,21 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Edit / add address book entry'])[1]/following::div[1]"));
     }
 
+    // метод для модификации контакта, передаем объект ContactData с заполненными полями
+    public void modificateContact(ContactData contact) {
+        // инициируем модификацию - нажать на "карандаш" в строке контакта
+        initModificationContact();
+
+        /* заполняем данные контакта переданным объектом ContactData и передаем false для переменной creation
+           эта переменная нужна, так как при создании контакта есть поле выбора групп,
+           а при редактировании контакта нет поля выбора групп
+         */
+        fillContactData(contact, false);
+
+        // нажимаем на кнопку update для сохранения измененных данных
+        submitModificationContact();
+    }
+
     public void createContact(ContactData contact) {
         initCreateContact();
         fillContactData(contact, true);
@@ -78,4 +93,6 @@ public class ContactHelper extends HelperBase {
     public int getContactCount() {
         return getDriver().findElements(By.name("selected[]")).size();
     }
+
+
 }
