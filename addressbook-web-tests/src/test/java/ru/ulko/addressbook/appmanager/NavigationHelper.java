@@ -27,4 +27,8 @@ public class NavigationHelper extends HelperBase{
         }
         click(By.linkText("home"));
     }
+
+    public void  gotoHomePageWithoutCheck(){
+        click(By.linkText("home"));
+    }
 }

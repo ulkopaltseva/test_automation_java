@@ -50,7 +50,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteSelectedContact() {
-        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Select all'])[1]/following::input[2]"));
+        click(By.xpath("//input[@value='Delete']"));
     }
 
     public void initModificationContact() {
