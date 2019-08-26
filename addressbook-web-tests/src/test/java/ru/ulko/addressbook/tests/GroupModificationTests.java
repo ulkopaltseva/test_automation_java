@@ -26,7 +26,7 @@ public class GroupModificationTests extends TestBase {
         List<GroupData> before = app.getGroupHelper().getGroupList();
 
         // создается объект group, которым будет модифицированна группа
-        GroupData group = new GroupData("test", "HEADER", "FOOTER");
+        GroupData group = new GroupData((before.get(before.size() - 1)).getId(), "test", "HEADER", "FOOTER");
 
         // вызывается метод модификации для последней в списке группы
         app.getGroupHelper().modificateGroup(group, before.size() - 1);
