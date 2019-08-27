@@ -5,24 +5,7 @@ public class GroupData {
     private String name;
     private String header;
     private String footer;
-    private String id; // уникальный идентефикатор, находится в теге input и берется из значения value
-
-    // конструктор с инициализацией полей
-    public GroupData(String id, String name, String header, String footer) {
-        this.id = id;
-        this.name = name;
-        this.header = header;
-        this.footer = footer;
-    }
-
-    // конструктор с инициализацией полей без указания id
-    public GroupData(String name, String header, String footer) {
-        this.id = null;
-        this.name = name;
-        this.header = header;
-        this.footer = footer;
-    }
-
+    private int id; // уникальный идентефикатор, находится в теге input и берется из значения value
 
     @Override
     public boolean equals(Object o) {
@@ -31,17 +14,35 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
-        if (name != null ? !name.equals(groupData.name) : groupData.name != null) return false;
-        return id != null ? id.equals(groupData.id) : groupData.id == null;
+        if (id != groupData.id) return false;
+        return name != null ? name.equals(groupData.name) : groupData.name == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
+
+    // конструктор с инициализацией полей
+    public GroupData(int id, String name, String header, String footer) {
+        this.id = id;
+        this.name = name;
+        this.header = header;
+
+        this.footer = footer;
+    }
+
+    // конструктор с инициализацией полей без указания id
+    public GroupData(String name, String header, String footer) {
+        this.id = 0;
+        this.name = name;
+        this.header = header;
+        this.footer = footer;
+    }
+
 
     @Override
     public String toString() {
@@ -51,7 +52,11 @@ public class GroupData {
                 '}';
     }
 
-    public String getId() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
         return id;
     }
 

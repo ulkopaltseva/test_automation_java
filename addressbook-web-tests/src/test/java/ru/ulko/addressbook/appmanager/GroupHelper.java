@@ -101,7 +101,8 @@ public class GroupHelper extends HelperBase {
         List<GroupData> groups = new ArrayList<>();
         List<WebElement> elements = getDriver().findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
-            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            // нахождение по тегу input с атрибутом value айдишника группы и преобразование в int
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String name = element.getText();
             GroupData group = new GroupData(id, name, null, null);
             groups.add(group);
