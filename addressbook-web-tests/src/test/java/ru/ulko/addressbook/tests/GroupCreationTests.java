@@ -36,13 +36,16 @@ public class GroupCreationTests extends TestBase {
         };
         int max1 = before.stream().max(ById).get().getId();
 
+        // вычислить максимальное значение id с помощью лямбда-выражения
+        int max2 = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
+
 
         int i; // это для хранения количества созданных групп
         // в цикле создать несколько групп
         List<GroupData> differensBeforeAfter = new ArrayList<>(); //список групп, которые будут добавлены
-        for (i = 1; i < 2; i++) {
-            max1++; // id каждой следующей группы
-            GroupData group = new GroupData(max1, "test_" + i, "header", "footer");
+        for (i = 1; i < 3; i++) {
+            max2++; // id каждой следующей группы
+            GroupData group = new GroupData(max2, "test_" + i, "header", "footer");
             app.getGroupHelper().createGroup(group);
             differensBeforeAfter.add(group);
         }
