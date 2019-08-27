@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -26,12 +27,22 @@ public class GroupCreationTests extends TestBase {
             }
         }
 
+        // вычислить максимальное значение id с помощью компаратора
+        Comparator<? super GroupData> ById = new Comparator<GroupData>() {
+            @Override
+            public int compare(GroupData o1, GroupData o2) {
+                return Integer.compare(o1.getId(), o2.getId());
+            }
+        };
+        int max1 = before.stream().max(ById).get().getId();
+
+
         int i; // это для хранения количества созданных групп
         // в цикле создать несколько групп
         List<GroupData> differensBeforeAfter = new ArrayList<>(); //список групп, которые будут добавлены
-        for (i = 1; i < 3; i++) {
-            max++; // id каждой следующей группы
-            GroupData group = new GroupData(max, "test_" + i, "header", "footer");
+        for (i = 1; i < 2; i++) {
+            max1++; // id каждой следующей группы
+            GroupData group = new GroupData(max1, "test_" + i, "header", "footer");
             app.getGroupHelper().createGroup(group);
             differensBeforeAfter.add(group);
         }
