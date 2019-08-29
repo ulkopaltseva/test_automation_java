@@ -8,7 +8,7 @@ import ru.ulko.addressbook.model.GroupData;
 public class ContactCreationTests extends TestBase {
 
 
-    @Test
+    @Test(enabled = false)
     public void testContactCreation() throws Exception {
         // перейти на страницу групп
         app.getNavigationHelper().gotoGroupPage();

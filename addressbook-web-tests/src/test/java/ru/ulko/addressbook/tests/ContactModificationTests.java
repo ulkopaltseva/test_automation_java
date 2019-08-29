@@ -9,7 +9,7 @@ import ru.ulko.addressbook.model.ContactData;
  */
 public class ContactModificationTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContactModification() {
         // перейти на главную страницу - там список контактов
         app.getNavigationHelper().gotoHomePage();

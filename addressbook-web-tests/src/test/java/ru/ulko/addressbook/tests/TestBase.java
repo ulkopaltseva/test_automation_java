@@ -2,7 +2,9 @@ package ru.ulko.addressbook.tests;
 
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import ru.ulko.addressbook.appmanager.ApplicationManager;
 
 /**
@@ -10,15 +12,16 @@ import ru.ulko.addressbook.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
+    // глобальная переменная app для обращения к браузеру
+    protected static final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
     // это выполняется перед каждым тестом
-    @BeforeClass(alwaysRun = true)
+    @BeforeSuite()
     public void setUp() throws Exception {
-        app.init();
+        app.init(); //выполняется код инициализации, кот. инициализирует глобальную переменную app
     }
 
-    @AfterClass
+    @AfterSuite
     // это выполняется после каждого теста
     public void tearDown() throws Exception {
         app.stop();
