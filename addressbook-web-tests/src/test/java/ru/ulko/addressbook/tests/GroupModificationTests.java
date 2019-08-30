@@ -1,6 +1,7 @@
 package ru.ulko.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 
@@ -12,35 +13,31 @@ import java.util.List;
  */
 public class GroupModificationTests extends TestBase {
 
-    @Test
-    public void testGroupModification() {
-        int id;
-        String name = "test";
-        String header = "header";
-        String footer = "footer";
-        GroupData newGroup = new GroupData(name, header, footer);
-
+    @BeforeMethod
+    public void ensurePreconditions(){
         app.getNavigationHelper().gotoGroupPage();
 
         if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(newGroup);
+            app.getGroupHelper().createGroup(new GroupData("test", "header", "footer"));
         }
+    }
 
+    @Test
+    public void testGroupModification() {
+        ensurePreconditions();
         List<GroupData> before = app.getGroupHelper().getGroupList();
 
-        newGroup.setName("TEST");
-        newGroup.setHeader("HEADER");
-        newGroup.setFooter("FOOTER");
-        int lastGroup = before.size() - 1;
-        id = before.get(lastGroup).getId();
-        newGroup.setId(id);
-        app.getGroupHelper().modificateGroup(newGroup, lastGroup);
+        GroupData newGroup = new GroupData("TEST", "HEADER", "FOOTER");
+        int lastGroupNumber = before.size() - 1;
+        int idOfModify = before.get(lastGroupNumber).getId();
+        newGroup.setId(idOfModify);
+        app.getGroupHelper().modificateGroup(newGroup, lastGroupNumber);
 
         List<GroupData> after = app.getGroupHelper().getGroupList();
 
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(lastGroup);
+        before.remove(lastGroupNumber);
         before.add(newGroup);
         Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
 

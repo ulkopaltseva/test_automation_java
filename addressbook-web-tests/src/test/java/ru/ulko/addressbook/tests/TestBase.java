@@ -10,17 +10,14 @@ import ru.ulko.addressbook.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-    // глобальная переменная app для обращения к браузеру
     protected static final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
-    // это выполняется перед каждым тестом
     @BeforeSuite()
     public void setUp() throws Exception {
-        app.init(); //выполняется код инициализации, кот. инициализирует глобальную переменную app
+        app.init();
     }
 
     @AfterSuite
-    // это выполняется после каждого теста
     public void tearDown() throws Exception {
         app.stop();
     }
