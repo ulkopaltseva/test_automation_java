@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ContactDeleteTests extends TestBase {
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testContactDelete() {
         // перейти на страницу контактов
         app.getNavigationHelper().gotoHomePage();

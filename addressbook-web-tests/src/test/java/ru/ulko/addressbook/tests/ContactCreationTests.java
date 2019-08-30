@@ -12,7 +12,7 @@ import java.util.List;
 public class ContactCreationTests extends TestBase {
 
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testContactCreation() throws Exception {
         // перейти на страницу групп
         app.getNavigationHelper().gotoGroupPage();

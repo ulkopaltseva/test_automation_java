@@ -14,35 +14,34 @@ public class GroupModificationTests extends TestBase {
 
     @Test
     public void testGroupModification() {
-        // переход на страницу группы
+        int id;
+        String name = "test";
+        String header = "header";
+        String footer = "footer";
+        GroupData newGroup = new GroupData(name, header, footer);
+
         app.getNavigationHelper().gotoGroupPage();
 
-        // проверяется, есть ли хоть одна группа на странице, иначе создается новую
         if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("test", "HEADER", "FOOTER"));
+            app.getGroupHelper().createGroup(newGroup);
         }
 
-        // создается список before и заполняется списком текущих групп
         List<GroupData> before = app.getGroupHelper().getGroupList();
 
-        // создается объект group, которым будет модифицированна группа
-        GroupData group = new GroupData((before.get(before.size() - 1)).getId(), "test", "HEADER", "FOOTER");
+        newGroup.setName("TEST");
+        newGroup.setHeader("HEADER");
+        newGroup.setFooter("FOOTER");
+        int lastGroup = before.size() - 1;
+        id = before.get(lastGroup).getId();
+        newGroup.setId(id);
+        app.getGroupHelper().modificateGroup(newGroup, lastGroup);
 
-        // вызывается метод модификации для последней в списке группы
-        app.getGroupHelper().modificateGroup(group, before.size() - 1);
-
-        // создается список after и заполняется получившимся после модификации списком групп
         List<GroupData> after = app.getGroupHelper().getGroupList();
-        // сравниваем количество групп до и после модификации - должно совпадать
+
         Assert.assertEquals(after.size(), before.size());
 
-        // удаляется элемент в списке before, который был модифицирован
-        before.remove(before.size() - 1);
-
-        // добавляется новый объект, которым заменяется модифицируемый - group
-        before.add(group);
-
-        // сравниваются списки before и after, предворительно преобразовав их в множества - HashSet<Object>
+        before.remove(lastGroup);
+        before.add(newGroup);
         Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
 
     }

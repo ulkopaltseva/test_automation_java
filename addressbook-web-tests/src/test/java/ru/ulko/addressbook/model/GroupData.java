@@ -1,11 +1,66 @@
 package ru.ulko.addressbook.model;
 
-// форма заполнения группы при создании и модификации
+/*Group data fields*/
 public class GroupData {
+    private int id;
     private String name;
     private String header;
     private String footer;
-    private int id; // уникальный идентефикатор, находится в теге input и берется из значения value
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public void setFooter(String footer) {
+        this.footer = footer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
+
+    public GroupData(int id, String name, String header, String footer) {
+        this.id = id;
+        this.name = name;
+        this.header = header;
+
+        this.footer = footer;
+    }
+
+    public GroupData(String name, String header, String footer) {
+        this.id = 0;
+        this.name = name;
+        this.header = header;
+        this.footer = footer;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupData{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -24,52 +79,6 @@ public class GroupData {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + id;
         return result;
-    }
-
-    // конструктор с инициализацией полей
-    public GroupData(int id, String name, String header, String footer) {
-        this.id = id;
-        this.name = name;
-        this.header = header;
-
-        this.footer = footer;
-    }
-
-    // конструктор с инициализацией полей без указания id
-    public GroupData(String name, String header, String footer) {
-        this.id = 0;
-        this.name = name;
-        this.header = header;
-        this.footer = footer;
-    }
-
-
-    @Override
-    public String toString() {
-        return "GroupData{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                '}';
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public String getFooter() {
-        return footer;
     }
 
 }

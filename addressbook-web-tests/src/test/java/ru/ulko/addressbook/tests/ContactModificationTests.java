@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ContactModificationTests extends TestBase {
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testContactModification() {
         // перейти на главную страницу - там список контактов
         app.getNavigationHelper().gotoHomePage();
