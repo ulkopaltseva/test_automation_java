@@ -1,9 +1,7 @@
 package ru.ulko.addressbook.tests;
 
 import org.openqa.selenium.remote.BrowserType;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import ru.ulko.addressbook.appmanager.ApplicationManager;
 
