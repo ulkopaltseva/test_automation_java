@@ -26,7 +26,7 @@ public class ContactDeleteTests extends TestBase {
         /* добавить имплицидный таймаут, так как есть проблемы с чтением списка после удаления контакта
            (считывает список еще до загрузки нового) */
         app.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        
+
         // заполнить список before списком контактов до удаления
         List<ContactData> before = app.getContactHelper().getContactList();
 

@@ -19,7 +19,12 @@ public class GroupCreationTests extends TestBase {
         List<GroupData> before = app.getGroupHelper().getGroupList();
 
         // вычислить максимальное значение id с помощью лямбда-выражения
-        int max = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
+        int max;
+        if (app.getGroupHelper().isThereAGroup()) {
+            max = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
+        } else {
+            max = 0;
+        }
 
 
         int i; // это для хранения количества созданных групп
@@ -29,6 +34,11 @@ public class GroupCreationTests extends TestBase {
             max++; // id каждой следующей группы
             GroupData group = new GroupData(max, "test_" + i, "header", "footer");
             app.getGroupHelper().createGroup(group);
+            //получить реальный id только что созданной группы, если группа только одна
+            if (app.getGroupHelper().getGroupCount() == 1) {
+                max = app.getGroupHelper().getGroupList().get(0).getId();
+                group.setId(max);
+            }
             differensBeforeAfter.add(group);
         }
         i--; /* количество созданных групп уменьшить на 1 так как в цикле на последнем круге группа не создалась
@@ -40,13 +50,12 @@ public class GroupCreationTests extends TestBase {
         // сравнивнить количество элементов в списках before и after. в after должно увеличиться на i
         Assert.assertEquals(after.size(), before.size() + i);
 
-        // вычислить значение id для созданной группы - будет максимальное id среди созданных групп
-
-
         // добавить в список before созданные группы, добавленные в список differensBeforeAfter
         for (GroupData d : differensBeforeAfter) {
             before.add(d);
         }
+
+
         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
     }
 
