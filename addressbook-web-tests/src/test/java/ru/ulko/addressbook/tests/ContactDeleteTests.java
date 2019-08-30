@@ -4,6 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.ContactData;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,22 +13,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class ContactDeleteTests extends TestBase {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testContactDelete() {
         // перейти на страницу контактов
         app.getNavigationHelper().gotoHomePage();
+
 
         // проверить, есть ли хоть один контакт на странице, если нет - создать
         if (!app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactData("First name", "Last Name", "8 sovet street, 31", "home phone", "monib phone", "work phone", "fax phone", "email", "email2", null, "test"));
         }
-
         /* добавить имплицидный таймаут, так как есть проблемы с чтением списка после удаления контакта
            (считывает список еще до загрузки нового) */
         app.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
+        
         // заполнить список before списком контактов до удаления
-        int before = app.getContactHelper().getContactCount();
+        List<ContactData> before = app.getContactHelper().getContactList();
 
         // выбрать контакт, который нужно удалить
         app.getContactHelper().selectContact();
@@ -44,12 +46,17 @@ public class ContactDeleteTests extends TestBase {
         app.getNavigationHelper().gotoHomePageWithoutCheck();
 
         // заполнить список after для обновленного списка контактов после удаления
-        int after = app.getContactHelper().getContactCount();
+        List<ContactData> after = app.getContactHelper().getContactList();
 
         // сравнить количество контактов в списках after и before, должно уменьшиться на 1
-        Assert.assertEquals(after, before - 1);
+        Assert.assertEquals(after.size(), before.size() - 1);
 
         // выставить имплицидное ожидание обратно в ноль
         app.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+
+        // удалить из списка before контакт, который был удален (первый в списке)
+        before.remove(0);
+        // сравнить списки before и after превратив их в неупорядоченные множества
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
     }
 }
