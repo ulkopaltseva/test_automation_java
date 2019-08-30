@@ -2,9 +2,13 @@ package ru.ulko.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.ulko.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yulia on 20.08.2019.
@@ -108,4 +112,19 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = getDriver().findElements(By.cssSelector("table>tbody>tr"));
+
+        // просмотреть все элементы теги tr в таблице контактов. начать с первого, т.к. нулевой - заголовок таблицы
+        for(int i = 1; i < elements.size(); i++){
+            // найти айдишник по тегу input и вытануть его value - будет идентификатором
+            int id = Integer.parseInt(elements.get(i).findElement(By.tagName("input")).getAttribute("value"));
+            String lastName = elements.get(i).findElement(By.xpath("//td[2]")).getText();
+            String firstName = elements.get(i).findElement(By.xpath("//td[3]")).getText();
+            ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, null);
+            contacts.add(contact); // добавить в ArrayList контакты найденный контакт
+        }
+        return contacts;
+    }
 }

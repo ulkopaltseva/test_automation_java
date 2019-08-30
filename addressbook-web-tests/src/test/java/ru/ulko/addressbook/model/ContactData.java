@@ -17,6 +17,7 @@ public class ContactData {
 
     // конструктор с инициализацией полей контакта
     public ContactData(String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String group) {
+        this.id = 0; // если не говорится обратоного задать Id = 0
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -29,6 +30,8 @@ public class ContactData {
         this.email3 = email3;
         this.group = group;
     }
+
+
 
 
     // конструктор с инициализацией полей контакта с id контакта
@@ -99,7 +102,6 @@ public class ContactData {
         this.id = id;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,6 +130,5 @@ public class ContactData {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
-
     }
 }
