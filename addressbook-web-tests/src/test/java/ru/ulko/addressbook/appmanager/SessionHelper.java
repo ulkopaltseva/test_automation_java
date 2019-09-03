@@ -9,13 +9,11 @@ import org.openqa.selenium.WebDriver;
 // логин на сайте http://localhost/addressbook
 public class SessionHelper extends HelperBase {
 
-    // конатруктор с инициализацие веб-драйвера
     public SessionHelper(WebDriver driver) {
         super(driver);
     }
 
 
-    // залогиниться на сайте
     public void login(String user, String password) {
         type(By.name("user"), user);
         click(By.id("LoginForm"));

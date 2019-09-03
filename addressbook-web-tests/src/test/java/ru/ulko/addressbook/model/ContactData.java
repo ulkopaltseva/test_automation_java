@@ -1,6 +1,5 @@
 package ru.ulko.addressbook.model;
 
-// форма заполнения контакта при создании и модификации
 public class ContactData {
     private int id;
     private String firstName;
@@ -15,9 +14,8 @@ public class ContactData {
     private String email3;
     private String group;
 
-    // конструктор с инициализацией полей контакта
     public ContactData(String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String group) {
-        this.id = 0; // если не говорится обратоного задать Id = 0
+        this.id = 0;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -32,9 +30,6 @@ public class ContactData {
     }
 
 
-
-
-    // конструктор с инициализацией полей контакта с id контакта
     public ContactData(int id, String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String group) {
         this.id = id;
         this.firstName = firstName;

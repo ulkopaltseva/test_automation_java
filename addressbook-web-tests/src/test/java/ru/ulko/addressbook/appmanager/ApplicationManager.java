@@ -18,9 +18,9 @@ public class ApplicationManager {
     private GroupHelper groupHelper;
     private SessionHelper sessionHelper;
     private ContactHelper contactHelper;
-    public WebDriver driver;
-    public String baseUrl;
-    public StringBuffer verificationErrors = new StringBuffer();
+    private WebDriver driver;
+    private String baseUrl;
+    private StringBuffer verificationErrors = new StringBuffer();
     private String browser;
 
     public ApplicationManager(String browser) {
@@ -28,7 +28,6 @@ public class ApplicationManager {
     }
 
     public void init() {
-        // выбрать браузер для запуска тестов
         if (browser.equals(BrowserType.FIREFOX)) {
             driver = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
@@ -38,22 +37,18 @@ public class ApplicationManager {
         }
         baseUrl = "https://www.katalon.com/";
 
-        // имплицидное ожидание - ожидание, если страница не сразу прогрузилась
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 
-        // с какой страницы начать запуск тестов
         driver.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
         sessionHelper = new SessionHelper(driver);
         contactHelper = new ContactHelper(driver);
 
-        // залогиниться на сайте
         sessionHelper.login("admin", "secret");
     }
 
 
-    // закончить работу с веб-драйвером
     public void stop() {
         driver.quit();
         String verificationErrorString = verificationErrors.toString();
@@ -62,21 +57,20 @@ public class ApplicationManager {
         }
     }
 
-    // метод для выбора "да" во всплывающем окне
     public void closeAlert() {
         driver.switchTo().alert().accept();
     }
 
 
-    public GroupHelper getGroupHelper() {
+    public GroupHelper group() {
         return groupHelper;
     }
 
-    public NavigationHelper getNavigationHelper() {
+    public NavigationHelper goTo() {
         return navigationHelper;
     }
 
-    public ContactHelper getContactHelper() {
+    public ContactHelper contact() {
         return contactHelper;
     }
 

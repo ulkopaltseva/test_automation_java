@@ -9,6 +9,7 @@ import ru.ulko.addressbook.model.ContactData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yulia on 20.08.2019.
@@ -16,22 +17,10 @@ import java.util.List;
 public class ContactHelper extends HelperBase {
 
 
-    public ContactHelper(WebDriver driver) {
+    protected ContactHelper(WebDriver driver) {
         super(driver);
     }
 
-    // нажть на кнопку для сохранения изменений при создании / модификации контакта
-    public void submitCreationContact() {
-        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]"));
-    }
-
-
-    // нажать на add new на странице сайта для создания контакта
-    public void initCreateContact() {
-        click(By.linkText("add new"));
-    }
-
-    // заполнить поля в контакте
     public void fillContactData(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
@@ -44,87 +33,85 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
 
-        // если это создание контакта - заполнить поле группа
         if (creation == true) {
-            new Select(getDriver().findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
         } else {
-            // если это редактирование контакта, создать исключение, если поле группы все равно есть (не должно быть)
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     }
 
-    // выбрать первый контакт в списке
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 
-    // нажать на кнопку удалить для выбранного контакта
-    public void deleteSelectedContact() {
-        click(By.xpath("//input[@value='Delete']"));
+    public int getContactCount() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 
-    // нажать на значок карандаша для редактирования контакта
-    public void initModificationContact() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initCreateContact() {
+        click(By.linkText("add new"));
     }
 
-    // нажать на кнопку update при редактировании контакта для сохранения изменений
-    public void submitModificationContact() {
-        click(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Edit / add address book entry'])[1]/following::div[1]"));
+    private void submitCreationContact() {
+        click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    // метод для модификации контакта, передать объект ContactData с заполненными полями
-    public void modificateContact(ContactData contact) {
-        // инициировать модификацию - нажать на "карандаш" в строке контакта
-        initModificationContact();
-
-        /* заполнить данные контакта переданным объектом ContactData и передать false для переменной creation
-           эта переменная нужна, так как при создании контакта есть поле выбора групп,
-           а при редактировании контакта нет поля выбора групп
-         */
-        fillContactData(contact, false);
-
-        // нажать на кнопку update для сохранения измененных данных
-        submitModificationContact();
+    private void returnHomePage() {
+        click(By.linkText("home page"));
     }
 
-    // создать контакт
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initCreateContact();
         fillContactData(contact, true);
         submitCreationContact();
         returnHomePage();
     }
 
-    // нажать на ссылку - вернуться на домашнюю страницу (контакты)
-    public void returnHomePage() {
-        click(By.linkText("home page"));
+    public void selectContact() {
+        click(By.name("selected[]"));
     }
 
-    // проверка, есть ли контакты на странице контактов
-    public boolean isThereAContact() {
-        return isElementPresent(By.name("selected[]"));
-    }
-
-    // посчитать количество контактов на странице
-    public int getContactCount() {
-        return getDriver().findElements(By.name("selected[]")).size();
+    public void deleteSelectedContact() {
+        click(By.xpath("//input[@value='Delete']"));
     }
 
 
-    public List<ContactData> getContactList() {
+    public void delete() {
+        selectContact();
+        deleteSelectedContact();
+    }
+
+
+
+    public void initModificationContact() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitModificationContact() {
+        click(By.name("update"));
+    }
+
+    public void modify(ContactData contact) {
+        initModificationContact();
+        fillContactData(contact, false);
+        submitModificationContact();
+        returnHomePage();
+    }
+
+
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
-        List<WebElement> elements = getDriver().findElements(By.cssSelector("table>tbody>tr"));
+        List<WebElement> rows = driver.findElements(By.tagName("tr"));
 
-        // просмотреть все элементы теги tr в таблице контактов. начать с первого, т.к. нулевой - заголовок таблицы
-        for(int i = 1; i < elements.size(); i++){
-            // найти айдишник по тегу input и вытануть его value - будет идентификатором
-            int id = Integer.parseInt(elements.get(i).findElement(By.tagName("input")).getAttribute("value"));
-            String lastName = elements.get(i).findElement(By.xpath("//td[2]")).getText();
-            String firstName = elements.get(i).findElement(By.xpath("//td[3]")).getText();
-            ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, null);
-            contacts.add(contact); // добавить в ArrayList контакты найденный контакт
-        }
+            for (int i = 1; i < rows.size(); i++) {
+                int id = Integer.parseInt(rows.get(i).findElement(By.tagName("input")).getAttribute("value"));
+                String firstName = rows.get(i).findElement(By.xpath("td[3]")).getText();
+                String lastName = rows.get(i).findElement(By.xpath("td[2]")).getText();
+                ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, "test");
+                contacts.add(contact);
+            }
         return contacts;
     }
+
+
 }

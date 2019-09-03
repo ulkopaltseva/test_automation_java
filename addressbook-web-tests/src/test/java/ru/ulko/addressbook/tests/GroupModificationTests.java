@@ -14,31 +14,31 @@ import java.util.List;
 public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
-        app.getNavigationHelper().gotoGroupPage();
+    public void ensurePreconditions() {
+        app.goTo().groupPage();
 
-        if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("test", "header", "footer"));
+        if (app.group().list().size() == 0) {
+            app.group().createGroup(new GroupData("test", "header", "footer"));
         }
     }
 
     @Test
     public void testGroupModification() {
         ensurePreconditions();
-        List<GroupData> before = app.getGroupHelper().getGroupList();
+        List<GroupData> before = app.group().list();
 
-        GroupData newGroup = new GroupData("TEST", "HEADER", "FOOTER");
-        int lastGroupNumber = before.size() - 1;
-        int idOfModify = before.get(lastGroupNumber).getId();
-        newGroup.setId(idOfModify);
-        app.getGroupHelper().modificateGroup(newGroup, lastGroupNumber);
+        GroupData group = new GroupData("TEST", "HEADER", "FOOTER");
+        int index = before.size() - 1;
+        int id = before.get(index).getId();
+        group.setId(id);
+        app.group().modify(group, index);
 
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        List<GroupData> after = app.group().list();
 
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(lastGroupNumber);
-        before.add(newGroup);
+        before.remove(index);
+        before.add(group);
         Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
 
     }
