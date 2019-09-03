@@ -22,7 +22,7 @@ public class ContactModificationTests extends TestBase {
         app.goTo().groupPage();
         if(app.group().list().size() == 0) {
             app.goTo().groupPage();
-            app.group().createGroup(new GroupData("test", null, null));
+            app.group().createGroup(new GroupData().withName("test"));
         }
 
         app.goTo().homePage();

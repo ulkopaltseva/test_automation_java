@@ -28,9 +28,9 @@ public class GroupCreationTests extends TestBase {
         List<GroupData> differenceBeforeAfter = new ArrayList<>();
         int index = before.size();
         for (int i = 1; i < 3; i++) {
-            GroupData group = new GroupData("test_" + i, "header", "footer");
+            GroupData group = new GroupData().withName("test_" + i).withHeader("header").withFooter("footer");
             maxId++;
-            group.setId(maxId);
+            group.withId(maxId);
             app.group().createGroup(group);
             if (app.group().list().size() == 1){
                 maxId = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();

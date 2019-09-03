@@ -15,7 +15,7 @@ public class ContactCreationTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions(){
         app.goTo().groupPage();
-        app.group().createGroup(new GroupData("test", "header", "footer"));
+        app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
         app.goTo().homePage();
     }
 
