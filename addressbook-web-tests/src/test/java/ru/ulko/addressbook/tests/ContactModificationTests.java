@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
 public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePrecondition(){
+    public void ensurePrecondition() {
         app.contact().driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         app.goTo().groupPage();
-        if(app.group().list().size() == 0) {
+        if (app.group().list().size() == 0) {
             app.goTo().groupPage();
             app.group().createGroup(new GroupData().withName("test"));
         }
@@ -34,7 +34,7 @@ public class ContactModificationTests extends TestBase {
     }
 
     @AfterMethod
-    public void stopContact(){
+    public void stopContact() {
         app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 

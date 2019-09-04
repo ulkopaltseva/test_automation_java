@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class ContactDeleteTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePrecondition(){
+    public void ensurePrecondition() {
         app.contact().driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         app.goTo().homePage();
 
@@ -26,7 +26,7 @@ public class ContactDeleteTests extends TestBase {
     }
 
     @AfterMethod
-    public void stopContact(){
+    public void stopContact() {
         app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 

@@ -9,7 +9,6 @@ import ru.ulko.addressbook.model.ContactData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yulia on 20.08.2019.
@@ -82,7 +81,6 @@ public class ContactHelper extends HelperBase {
     }
 
 
-
     public void initModificationContact() {
         click(By.xpath("//img[@alt='Edit']"));
     }
@@ -103,13 +101,13 @@ public class ContactHelper extends HelperBase {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> rows = driver.findElements(By.tagName("tr"));
 
-            for (int i = 1; i < rows.size(); i++) {
-                int id = Integer.parseInt(rows.get(i).findElement(By.tagName("input")).getAttribute("value"));
-                String firstName = rows.get(i).findElement(By.xpath("td[3]")).getText();
-                String lastName = rows.get(i).findElement(By.xpath("td[2]")).getText();
-                ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, "test");
-                contacts.add(contact);
-            }
+        for (int i = 1; i < rows.size(); i++) {
+            int id = Integer.parseInt(rows.get(i).findElement(By.tagName("input")).getAttribute("value"));
+            String firstName = rows.get(i).findElement(By.xpath("td[3]")).getText();
+            String lastName = rows.get(i).findElement(By.xpath("td[2]")).getText();
+            ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, "test");
+            contacts.add(contact);
+        }
         return contacts;
     }
 
