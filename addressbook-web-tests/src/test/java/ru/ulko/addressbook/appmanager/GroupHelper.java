@@ -76,10 +76,10 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void modify(GroupData groupData, int index) {
-        select(index);
+    public void modify(GroupData group) {
+        selectById(group.getId());
         initGroupModification();
-        fillGroupForm(groupData);
+        fillGroupForm(group);
         submitGroupModification();
         returnGroupPage();
     }

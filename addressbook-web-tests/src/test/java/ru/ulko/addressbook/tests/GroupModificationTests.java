@@ -7,6 +7,7 @@ import ru.ulko.addressbook.model.GroupData;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by yulia on 21.08.2019.
@@ -25,21 +26,19 @@ public class GroupModificationTests extends TestBase {
     @Test
     public void testGroupModification() {
         ensurePreconditions();
-        List<GroupData> before = app.group().list();
+        Set<GroupData> before = app.group().all();
+        GroupData modifyGroup = before.iterator().next();
 
-        GroupData group = new GroupData().withName("TEST").withHeader("HEADER").withFooter("FOOTER");
-        int index = before.size() - 1;
-        int id = before.get(index).getId();
-        group.withId(id);
-        app.group().modify(group, index);
+        GroupData group = new GroupData().withId(modifyGroup.getId()).withName("TEST").withHeader("HEADER").withFooter("FOOTER");
+        app.group().modify(group);
 
-        List<GroupData> after = app.group().list();
+        Set<GroupData> after = app.group().all();
 
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(index);
+        before.remove(modifyGroup);
         before.add(group);
-        Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
+        Assert.assertEquals(before, after);
 
     }
 
