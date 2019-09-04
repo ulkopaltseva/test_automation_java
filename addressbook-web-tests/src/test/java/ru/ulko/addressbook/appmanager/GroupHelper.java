@@ -26,6 +26,14 @@ public class GroupHelper extends HelperBase {
 
     }
 
+    private void select(int index) {
+        driver.findElements(By.name("selected[]")).get(index).click();
+    }
+
+    private void selectById(int id) {
+        driver.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    }
+
     private void initGroupCreation() {
         click(By.name("new"));
     }
@@ -50,6 +58,15 @@ public class GroupHelper extends HelperBase {
         deleteSelectedGroups();
         returnGroupPage();
     }
+
+
+    public void deleteById(GroupData deletedGroup) {
+        selectById(deletedGroup.getId());
+        deleteSelectedGroups();
+        returnGroupPage();
+    }
+
+
 
     private void initGroupModification() {
         click(By.name("edit"));
@@ -80,9 +97,7 @@ public class GroupHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-    protected void select(int index) {
-        driver.findElements(By.name("selected[]")).get(index).click();
-    }
+
 
     public List<GroupData> list() {
         List<GroupData> groups = new ArrayList<>();
