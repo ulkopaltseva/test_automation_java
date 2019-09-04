@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.ulko.addressbook.model.GroupData;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +23,6 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_header"), groupData.getHeader());
         type(By.name("group_footer"), groupData.getFooter());
 
-    }
-
-    private void select(int index) {
-        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     private void selectById(int id) {
@@ -53,19 +48,11 @@ public class GroupHelper extends HelperBase {
         click(By.name("delete"));
     }
 
-    public void delete(int index) {
-        select(index);
-        deleteSelectedGroups();
-        returnGroupPage();
-    }
-
-
     public void deleteById(GroupData deletedGroup) {
         selectById(deletedGroup.getId());
         deleteSelectedGroups();
         returnGroupPage();
     }
-
 
 
     private void initGroupModification() {
@@ -97,19 +84,6 @@ public class GroupHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-
-
-    public List<GroupData> list() {
-        List<GroupData> groups = new ArrayList<>();
-        List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
-        for (WebElement element : elements) {
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            String name = element.getText();
-            GroupData group = new GroupData().withId(id).withName(name);
-            groups.add(group);
-        }
-        return groups;
-    }
 
     public Set<GroupData> all() {
         Set<GroupData> groups = new HashSet<>();

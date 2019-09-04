@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 
-import java.util.List;
 import java.util.Set;
 
 public class GroupDeleteTests extends TestBase {
@@ -14,7 +13,7 @@ public class GroupDeleteTests extends TestBase {
     public void ensurePreconditions() {
         app.goTo().groupPage();
 
-        if (app.group().list().size() == 0) {
+        if (app.group().all().size() == 0) {
             app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
         }
     }

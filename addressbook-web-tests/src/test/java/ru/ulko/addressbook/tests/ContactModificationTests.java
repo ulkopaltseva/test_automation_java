@@ -20,7 +20,7 @@ public class ContactModificationTests extends TestBase {
     public void ensurePrecondition() {
         app.contact().driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         app.goTo().groupPage();
-        if (app.group().list().size() == 0) {
+        if (app.group().all().size() == 0) {
             app.goTo().groupPage();
             app.group().createGroup(new GroupData().withName("test"));
         }
