@@ -24,7 +24,6 @@ public class GroupCreationTests extends TestBase {
             maxId = before.stream().mapToInt((g) -> g.getId()).max().getAsInt();
         }
         Set<GroupData> differenceBeforeAfter = new HashSet<>();
-        int index = before.size();
         for (int i = 1; i < 3; i++) {
             GroupData group = new GroupData().withName("test_" + i).withHeader("header").withFooter("footer");
             app.group().createGroup(group);
@@ -34,11 +33,12 @@ public class GroupCreationTests extends TestBase {
             maxId++;
             group.withId(maxId);
             differenceBeforeAfter.add(group);
-            index++;
         }
-        Set<GroupData> after = app.group().all();
 
-        Assert.assertEquals(after.size(), index);
+
+        Set<GroupData> after = app.group().all();
+        Assert.assertEquals(after.size(), before.size() + differenceBeforeAfter.size());
+
         before.addAll(differenceBeforeAfter);
 
         Assert.assertEquals(before, after);
