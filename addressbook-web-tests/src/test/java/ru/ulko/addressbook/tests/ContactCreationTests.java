@@ -13,7 +13,7 @@ import java.util.List;
 public class ContactCreationTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensurePreconditions() {
         app.goTo().groupPage();
         app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
         app.goTo().homePage();

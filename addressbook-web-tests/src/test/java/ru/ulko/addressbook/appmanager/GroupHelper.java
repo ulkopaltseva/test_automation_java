@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.ulko.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by yulia on 20.08.2019.
@@ -91,6 +93,19 @@ public class GroupHelper extends HelperBase {
             GroupData group = new GroupData().withId(id).withName(name);
             groups.add(group);
         }
+        return groups;
+    }
+
+    public Set<GroupData> all() {
+        Set<GroupData> groups = new HashSet<>();
+        List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
+        for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            String name = element.getText();
+            GroupData group = new GroupData().withId(id).withName(name);
+            groups.add(group);
+        }
+
         return groups;
     }
 
