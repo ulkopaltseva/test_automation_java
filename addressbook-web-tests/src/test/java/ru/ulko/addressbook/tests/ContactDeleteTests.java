@@ -43,11 +43,10 @@ public class ContactDeleteTests extends TestBase {
         app.contact().driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         app.goTo().homePageWithoutCheck();
 
+        assertThat(app.contact().count(), equalTo(before.size() - 1));
+
         Contacts after = app.contact().all();
-
         app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        assertThat(after.size(), equalTo(before.size() - 1));
-
         assertThat(after, equalTo(before.withRemoved(deletedContact)));
     }
 }

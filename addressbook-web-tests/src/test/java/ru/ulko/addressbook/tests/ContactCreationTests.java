@@ -46,9 +46,10 @@ public class ContactCreationTests extends TestBase {
             newContact.withId(maxId);
             differenceBeforeAfter.add(newContact);
         }
-        Contacts after = app.contact().all();
 
-        assertThat(after.size(), equalTo(before.size() + differenceBeforeAfter.size()));
+        assertThat(app.contact().count(), equalTo(before.size() + differenceBeforeAfter.size()));
+
+        Contacts after = app.contact().all();
         assertThat(after, equalTo(before.withAddedAll(differenceBeforeAfter)));
     }
 
