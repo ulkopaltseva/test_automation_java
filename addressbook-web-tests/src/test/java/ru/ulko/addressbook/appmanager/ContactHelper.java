@@ -99,6 +99,25 @@ public class ContactHelper extends HelperBase {
         contactCache = null;
     }
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initModificationById(contact.getId());
+        String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
+        String address = driver.findElement(By.name("address")).getAttribute("value");
+        String homePhone = driver.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = driver.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = driver.findElement(By.name("work")).getAttribute("value");
+        String faxPhone = driver.findElement(By.name("fax")).getAttribute("value");
+        String email1 = driver.findElement(By.name("email")).getAttribute("value");
+        String email2 = driver.findElement(By.name("email2")).getAttribute("value");
+        String email3 = driver.findElement(By.name("email3")).getAttribute("value");
+        driver.navigate().back();
+        return new ContactData().withFirstName(firstName).withLastName(lastName)
+                .withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone)
+                .withWorkPhone(workPhone).withFaxPhone(faxPhone).withEmail1(email1)
+                .withEmail2(email2).withEmail3(email3);
+    }
+
 
     private Contacts contactCache = null;
 
