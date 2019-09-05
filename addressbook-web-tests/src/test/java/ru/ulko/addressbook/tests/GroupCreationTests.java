@@ -26,7 +26,7 @@ public class GroupCreationTests extends TestBase {
         if (before.size() != 0) {
             maxId = before.stream().mapToInt((g) -> g.getId()).max().getAsInt();
         }
-        Set<GroupData> differenceBeforeAfter = new HashSet<>();
+        Groups differenceBeforeAfter = new Groups();
         for (int i = 1; i < 3; i++) {
             GroupData group = new GroupData().withName("test_" + i).withHeader("header").withFooter("footer");
             app.group().createGroup(group);

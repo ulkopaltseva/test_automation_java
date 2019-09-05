@@ -14,87 +14,114 @@ public class ContactData {
     private String email3;
     private String group;
 
-    public ContactData(String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String group) {
-        this.id = 0;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.workPhone = workPhone;
-        this.faxPhone = faxPhone;
-        this.email1 = email1;
-        this.email2 = email2;
-        this.email3 = email3;
-        this.group = group;
-    }
-
-
-    public ContactData(int id, String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String group) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.workPhone = workPhone;
-        this.faxPhone = faxPhone;
-        this.email1 = email1;
-        this.email2 = email2;
-        this.email3 = email3;
-        this.group = group;
-    }
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public ContactData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
+    public ContactData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
     public String getAddress() {
         return address;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
     }
 
     public String getHomePhone() {
         return homePhone;
     }
 
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
     public String getMobilePhone() {
         return mobilePhone;
+    }
+
+    public ContactData withMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+        return this;
     }
 
     public String getWorkPhone() {
         return workPhone;
     }
 
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
+
     public String getFaxPhone() {
         return faxPhone;
+    }
+
+    public ContactData withFaxPhone(String faxPhone) {
+        this.faxPhone = faxPhone;
+        return this;
     }
 
     public String getEmail1() {
         return email1;
     }
 
+    public ContactData withEmail1(String email1) {
+        this.email1 = email1;
+        return this;
+    }
+
     public String getEmail2() {
         return email2;
+    }
+
+    public ContactData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
     }
 
     public String getEmail3() {
         return email3;
     }
 
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
+
     public String getGroup() {
         return group;
+    }
+
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
     }
 
     @Override

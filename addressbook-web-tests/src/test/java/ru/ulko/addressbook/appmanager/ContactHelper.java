@@ -6,8 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.ulko.addressbook.model.ContactData;
+import ru.ulko.addressbook.model.Contacts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,8 +66,12 @@ public class ContactHelper extends HelperBase {
         returnHomePage();
     }
 
-    public void selectContact() {
+    public void select() {
         click(By.name("selected[]"));
+    }
+
+    public void selectById(int id){
+        driver.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void deleteSelectedContact() {
@@ -76,7 +80,12 @@ public class ContactHelper extends HelperBase {
 
 
     public void delete() {
-        selectContact();
+        select();
+        deleteSelectedContact();
+    }
+
+    public void deleteById(ContactData deletedContact) {
+        selectById(deletedContact.getId());
         deleteSelectedContact();
     }
 
@@ -97,19 +106,20 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> rows = driver.findElements(By.tagName("tr"));
 
         for (int i = 1; i < rows.size(); i++) {
             int id = Integer.parseInt(rows.get(i).findElement(By.tagName("input")).getAttribute("value"));
             String firstName = rows.get(i).findElement(By.xpath("td[3]")).getText();
             String lastName = rows.get(i).findElement(By.xpath("td[2]")).getText();
-            ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, "test");
+            ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test");
             contacts.add(contact);
         }
         return contacts;
     }
+
 
 
 }

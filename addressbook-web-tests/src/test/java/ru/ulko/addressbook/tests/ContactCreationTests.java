@@ -1,14 +1,13 @@
 package ru.ulko.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.ContactData;
+import ru.ulko.addressbook.model.Contacts;
 import ru.ulko.addressbook.model.GroupData;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
@@ -19,35 +18,38 @@ public class ContactCreationTests extends TestBase {
         app.goTo().homePage();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testContactCreation() throws Exception {
-        List<ContactData> before = app.contact().list();
+        Contacts before = app.contact().all();
 
-        List<ContactData> differenceBeforeAfter = new ArrayList<>();
+        Contacts differenceBeforeAfter = new Contacts();
 
-        int maxId;
+        int maxId = 0;
         if (before.size() != 0) {
             maxId = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
-        } else
-            maxId = 0;
+        }
 
         int index;
         for (index = 1; index < 2; index++) {
-            ContactData newContact = new ContactData(maxId + index, "First name_" + index, "Last Name", "8 sovet street, 31", "home phone", "monib phone", "work phone", "fax phone", "email", "email2", null, "test");
+            ContactData newContact = new ContactData()
+                    .withId(maxId + index).withFirstName("First name_" + index).withLastName("Last Name")
+                    .withAddress("8 sovet street, 31").withHomePhone("home phone").withMobilePhone("mobile phone")
+                    .withWorkPhone("work phone").withFaxPhone("fax phone")
+                    .withEmail1("email").withEmail2("email2").withGroup("test");
             app.contact().create(newContact);
-            if (app.contact().getContactCount() == 1) {
-                maxId = app.contact().list().get(0).getId();
-                newContact.setId(maxId);
+
+            if (maxId == 0) {
+                maxId = app.contact().all().stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
+                newContact.withId(maxId);
             }
+
             differenceBeforeAfter.add(newContact);
         }
         index--;
-        List<ContactData> after = app.contact().list();
+        Contacts after = app.contact().all();
 
-        Assert.assertEquals(after.size(), before.size() + index);
-
-        before.addAll(differenceBeforeAfter);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        assertThat(after.size(), equalTo(before.size() + index));
+        assertThat(after, equalTo(before.withAddedAll(differenceBeforeAfter)));
     }
 
 

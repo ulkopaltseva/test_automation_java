@@ -1,14 +1,20 @@
 package ru.ulko.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.ContactData;
+import ru.ulko.addressbook.model.Contacts;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by yulia on 21.08.2019.
@@ -20,8 +26,11 @@ public class ContactDeleteTests extends TestBase {
         app.contact().driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         app.goTo().homePage();
 
-        if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData("First name", "Last Name", "8 sovet street, 31", "home phone", "monib phone", "work phone", "fax phone", "email", "email2", null, "test"));
+        if (app.contact().all().size() == 0) {
+            app.contact().create(new ContactData().withFirstName("First name").withLastName("Last Name")
+                    .withAddress("8 sovet street, 31").withHomePhone("home phone")
+                    .withMobilePhone("mobile phone").withWorkPhone("work phone")
+                    .withFaxPhone("fax phone").withEmail1("email").withEmail2("email2").withGroup("test"));
         }
     }
 
@@ -30,19 +39,19 @@ public class ContactDeleteTests extends TestBase {
         app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testContactDelete() {
-        List<ContactData> before = app.contact().list();
+        Contacts before = app.contact().all();
+        ContactData deletedContact = before.iterator().next();
 
-        app.contact().delete();
+        app.contact().deleteById(deletedContact);
         app.closeAlert();
         app.goTo().homePage();
 
 
-        List<ContactData> after = app.contact().list();
-        Assert.assertEquals(after.size(), before.size() - 1);
+        Contacts after = app.contact().all();
+        assertThat(after.size(), equalTo(before.size() - 1));
 
-        before.remove(0);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        assertThat(after, equalTo(before.withRemoved(deletedContact)));
     }
 }
