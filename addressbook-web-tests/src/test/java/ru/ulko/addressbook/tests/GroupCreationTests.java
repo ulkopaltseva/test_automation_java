@@ -1,12 +1,18 @@
 package ru.ulko.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
+import ru.ulko.addressbook.model.Groups;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
@@ -18,7 +24,7 @@ public class GroupCreationTests extends TestBase {
     @Test
     public void testGroupCreation() throws Exception {
 
-        Set<GroupData> before = app.group().all();
+        Groups before = app.group().all();
         int maxId = 0;
         if (before.size() != 0) {
             maxId = before.stream().mapToInt((g) -> g.getId()).max().getAsInt();
@@ -36,12 +42,10 @@ public class GroupCreationTests extends TestBase {
         }
 
 
-        Set<GroupData> after = app.group().all();
-        Assert.assertEquals(after.size(), before.size() + differenceBeforeAfter.size());
+        Groups after = app.group().all();
+        assertThat(after.size(), equalTo(before.size() + differenceBeforeAfter.size()));
 
-        before.addAll(differenceBeforeAfter);
-
-        Assert.assertEquals(before, after);
+        assertThat(before.withAddedAll(differenceBeforeAfter), equalTo(after));
     }
 
 }
