@@ -1,12 +1,15 @@
 package ru.ulko.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 import ru.ulko.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class GroupDeleteTests extends TestBase {
 
@@ -28,8 +31,8 @@ public class GroupDeleteTests extends TestBase {
         app.group().deleteById(deletedGroup);
 
         Groups after = app.group().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
-        Assert.assertEquals(before.withRemove(deletedGroup), after);
+        assertThat(after.size(), equalTo(before.size() - 1));
+        assertThat(after, equalTo(before.withRemoved(deletedGroup)));
 
     }
 

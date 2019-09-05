@@ -16,7 +16,7 @@ public class Groups extends ForwardingSet<GroupData> {
         this.delegate = new HashSet<GroupData>(groups.delegate());
     }
 
-    public Groups(){
+    public Groups() {
         this.delegate = new HashSet<GroupData>();
     }
 
@@ -31,19 +31,19 @@ public class Groups extends ForwardingSet<GroupData> {
         return groups;
     }
 
-    public Groups withAddedAll(Set<GroupData> listGroups){
+    public Groups withAddedAll(Set<GroupData> listGroups) {
         Groups groups = new Groups(this);
         groups.addAll(listGroups);
         return groups;
     }
 
-    public Groups withRemove(GroupData group){
+    public Groups withRemoved(GroupData group) {
         Groups groups = new Groups(this);
         groups.remove(group);
         return groups;
     }
 
-    public Groups withModify(GroupData oldGroup, GroupData newGroup){
+    public Groups withModified(GroupData oldGroup, GroupData newGroup) {
         Groups groups = new Groups(this);
         groups.remove(oldGroup);
         groups.add(newGroup);

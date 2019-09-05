@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.ulko.addressbook.model.GroupData;
 import ru.ulko.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by yulia on 20.08.2019.
