@@ -29,10 +29,12 @@ public class ContactCreationTests extends TestBase {
             maxId = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
         }
 
-        int countOfAddedContacts = 0;
-        for (int index = 1; index < 2; index++) {
+        int countExistingElements = before.size();
+        int countCreatedElements = 2;
+        countCreatedElements++;
+        for (int i = countExistingElements + 1; i < countCreatedElements + countExistingElements; i++) {
             ContactData newContact = new ContactData()
-                    .withFirstName("First name_" + index).withLastName("Last Name")
+                    .withFirstName("First name_" + i).withLastName("Last Name")
                     .withAddress("8 sovet street, 31").withHomePhone("home phone").withMobilePhone("mobile phone")
                     .withWorkPhone("work phone").withFaxPhone("fax phone")
                     .withEmail1("email").withEmail2("email2").withGroup("test");
@@ -43,11 +45,10 @@ public class ContactCreationTests extends TestBase {
             }
             newContact.withId(maxId);
             differenceBeforeAfter.add(newContact);
-            countOfAddedContacts++;
         }
         Contacts after = app.contact().all();
 
-        assertThat(after.size(), equalTo(before.size() + countOfAddedContacts));
+        assertThat(after.size(), equalTo(before.size() + differenceBeforeAfter.size()));
         assertThat(after, equalTo(before.withAddedAll(differenceBeforeAfter)));
     }
 

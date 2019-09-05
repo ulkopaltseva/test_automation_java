@@ -64,63 +64,49 @@ public class ContactHelper extends HelperBase {
         fillContactData(contact, true);
         submitCreationContact();
         returnHomePage();
+        contactCache = null;
     }
 
-    public void select() {
-        click(By.name("selected[]"));
-    }
-
-    public void selectById(int id){
+    private void selectById(int id){
         driver.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
-    public void deleteSelectedContact() {
+    private void deleteSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
-    }
-
-
-    public void delete() {
-        select();
-        deleteSelectedContact();
     }
 
     public void deleteById(ContactData deletedContact) {
         selectById(deletedContact.getId());
         deleteSelectedContact();
+        contactCache = null;
     }
 
 
-    public void initModification() {
-        click(By.xpath("//img[@alt='Edit']"));
-    }
-
-    public void initModificationById(int id){
+    private void initModificationById(int id){
         driver.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
     }
 
-    public void submitModificationContact() {
-        WebElement parentElement = driver.findElement(By.cssSelector("form[action='edit.php']"));
-        WebElement childElement = parentElement.findElement(By.cssSelector("input[value='Update']"));
-        childElement.submit();
+    private void submitModificationContact() {
+        driver.findElement(By.cssSelector("input[value='Update']")).submit();
     }
 
-    public void modify(ContactData contact) {
-        initModification();
-        fillContactData(contact, false);
-        submitModificationContact();
-        returnHomePage();
-    }
 
     public void modifyById(ContactData oldContact, ContactData newContact) {
         initModificationById(oldContact.getId());
         fillContactData(newContact, false);
         submitModificationContact();
         returnHomePage();
+        contactCache = null;
     }
 
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null){
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> rows = driver.findElements(By.tagName("tr"));
 
         for (int i = 1; i < rows.size(); i++) {
@@ -128,9 +114,9 @@ public class ContactHelper extends HelperBase {
             String firstName = rows.get(i).findElement(By.xpath("td[3]")).getText();
             String lastName = rows.get(i).findElement(By.xpath("td[2]")).getText();
             ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test");
-            contacts.add(contact);
+            contactCache.add(contact);
         }
-        return contacts;
+        return contactCache;
     }
 
 

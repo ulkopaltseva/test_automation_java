@@ -22,18 +22,21 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreation() throws Exception {
 
         Groups before = app.group().all();
-        int maxId = 0;
+        int maxId = -1;
         if (before.size() != 0) {
             maxId = before.stream().mapToInt((g) -> g.getId()).max().getAsInt();
         }
         Groups differenceBeforeAfter = new Groups();
-        for (int i = 1; i < 3; i++) {
+        int countExistingElements = before.size();
+        int countCreatedElements = 2;
+        countCreatedElements++;
+        for (int i = countExistingElements; i < countCreatedElements + countExistingElements; i++) {
             GroupData group = new GroupData().withName("test_" + i).withHeader("header").withFooter("footer");
             app.group().createGroup(group);
+            maxId++;
             if (maxId == 0) {
                 maxId = before.stream().mapToInt((g) -> g.getId()).max().getAsInt();
             }
-            maxId++;
             group.withId(maxId);
             differenceBeforeAfter.add(group);
         }
