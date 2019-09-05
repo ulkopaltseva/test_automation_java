@@ -24,7 +24,6 @@ public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
-        app.contact().driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         app.goTo().groupPage();
         if (app.group().all().size() == 0) {
             app.goTo().groupPage();
@@ -42,22 +41,19 @@ public class ContactModificationTests extends TestBase {
 
     }
 
-    @AfterMethod
-    public void stopContact() {
-        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    }
 
     @Test(enabled = true)
     public void testContactModification() {
         Contacts before = app.contact().all();
-        ContactData oldContact = app.contact().all().iterator().next();
-        ContactData newContact = new ContactData().withFirstName("name")
+        ContactData oldContact = before.iterator().next();
+        ContactData newContact = new ContactData()
+                .withId(oldContact.getId()).withFirstName("name")
                 .withLastName("last name").withAddress("rostovskaya 26")
                 .withHomePhone("home phone").withHomePhone("8800")
                 .withMobilePhone("5500").withFaxPhone("3500").withEmail1("email@")
                 .withEmail2("email2@").withGroup("test");
 
-        app.contact().modify(newContact);
+        app.contact().modifyById(oldContact, newContact);
 
 
         Contacts after = app.contact().all();

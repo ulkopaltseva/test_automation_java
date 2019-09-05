@@ -24,23 +24,23 @@ public class ContactCreationTests extends TestBase {
 
         Contacts differenceBeforeAfter = new Contacts();
 
-        int maxId = 0;
+        int maxId = -1;
         if (before.size() != 0) {
             maxId = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
         }
 
         int countOfAddedContacts = 0;
-        for (int index = 1; index < 5; index++) {
+        for (int index = 1; index < 2; index++) {
             ContactData newContact = new ContactData()
                     .withFirstName("First name_" + index).withLastName("Last Name")
                     .withAddress("8 sovet street, 31").withHomePhone("home phone").withMobilePhone("mobile phone")
                     .withWorkPhone("work phone").withFaxPhone("fax phone")
                     .withEmail1("email").withEmail2("email2").withGroup("test");
             app.contact().create(newContact);
-            if (maxId == 0){
-                maxId = before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
-            }
             maxId++;
+            if (maxId == 0){
+                maxId = app.contact().all().stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
+            }
             newContact.withId(maxId);
             differenceBeforeAfter.add(newContact);
             countOfAddedContacts++;

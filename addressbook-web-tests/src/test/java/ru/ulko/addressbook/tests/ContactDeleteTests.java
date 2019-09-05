@@ -23,7 +23,6 @@ public class ContactDeleteTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
-        app.contact().driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         app.goTo().homePage();
 
         if (app.contact().all().size() == 0) {
@@ -34,11 +33,6 @@ public class ContactDeleteTests extends TestBase {
         }
     }
 
-    @AfterMethod
-    public void stopContact() {
-        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    }
-
     @Test(enabled = true)
     public void testContactDelete() {
         Contacts before = app.contact().all();
@@ -46,10 +40,12 @@ public class ContactDeleteTests extends TestBase {
 
         app.contact().deleteById(deletedContact);
         app.closeAlert();
-        app.goTo().homePage();
-
+        app.contact().driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        app.goTo().homePageWithoutCheck();
 
         Contacts after = app.contact().all();
+
+        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         assertThat(after.size(), equalTo(before.size() - 1));
 
         assertThat(after, equalTo(before.withRemoved(deletedContact)));

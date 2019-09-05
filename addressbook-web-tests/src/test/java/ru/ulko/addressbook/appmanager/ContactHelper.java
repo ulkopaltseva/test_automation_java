@@ -55,7 +55,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    private void returnHomePage() {
+    public void returnHomePage() {
         click(By.linkText("home page"));
     }
 
@@ -90,17 +90,30 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void initModificationContact() {
+    public void initModification() {
         click(By.xpath("//img[@alt='Edit']"));
     }
 
+    public void initModificationById(int id){
+        driver.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+    }
+
     public void submitModificationContact() {
-        click(By.name("update"));
+        WebElement parentElement = driver.findElement(By.cssSelector("form[action='edit.php']"));
+        WebElement childElement = parentElement.findElement(By.cssSelector("input[value='Update']"));
+        childElement.submit();
     }
 
     public void modify(ContactData contact) {
-        initModificationContact();
+        initModification();
         fillContactData(contact, false);
+        submitModificationContact();
+        returnHomePage();
+    }
+
+    public void modifyById(ContactData oldContact, ContactData newContact) {
+        initModificationById(oldContact.getId());
+        fillContactData(newContact, false);
         submitModificationContact();
         returnHomePage();
     }
