@@ -105,24 +105,19 @@ public class ContactHelper extends HelperBase {
         String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
         String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
         String address = driver.findElement(By.name("address")).getAttribute("value");
-        String homePhone = clearPhone(driver.findElement(By.name("home")).getAttribute("value"));
-        String mobilePhone = clearPhone(driver.findElement(By.name("mobile")).getAttribute("value"));
-        String workPhone = clearPhone(driver.findElement(By.name("work")).getAttribute("value"));
-       // String faxPhone = driver.findElement(By.name("fax")).getAttribute("value");
+        String homePhone = driver.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = driver.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = driver.findElement(By.name("work")).getAttribute("value");
+        String faxPhone = driver.findElement(By.name("fax")).getAttribute("value");
         String email1 = driver.findElement(By.name("email")).getAttribute("value");
         String email2 = driver.findElement(By.name("email2")).getAttribute("value");
         String email3 = driver.findElement(By.name("email3")).getAttribute("value");
         driver.navigate().back();
         return new ContactData()
-                .withId(id).withFirstName(firstName).withLastName(lastName)
+                .withId(id).withFirstName(firstName).withLastName(lastName).withFaxPhone(faxPhone)
                 .withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone)
                 .withWorkPhone(workPhone).withEmail1(email1)
                 .withEmail2(email2).withEmail3(email3);
-    }
-
-
-    private String clearPhone(String phone){
-        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
     }
 
 
@@ -143,19 +138,12 @@ public class ContactHelper extends HelperBase {
             String firstName = cells.get(2).getText();
             String lastName = cells.get(1).getText();
             String address = cells.get(3).getText();
-            String[] allPhones = cells.get(5).getText().split("\n");
-            String homePhone = allPhones[0];
-            String mobilePhone = allPhones[1];
-            String workPhone = allPhones[2];
-            String[] allEmails = cells.get(4).getText().split("\n");
-            String email1 = allEmails[0];
-            String email2 = allEmails[1];
-            String email3 = allEmails[2];
+            String allPhones = cells.get(5).getText();
+            String allEmails = cells.get(4).getText();
             ContactData contact = new ContactData()
                     .withId(id).withFirstName(firstName).withLastName(lastName)
-                    .withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone)
-                    .withWorkPhone(workPhone).withEmail1(email1)
-                    .withEmail2(email2).withEmail3(email3);
+                    .withAddress(address).withAllPhones(allPhones)
+                    .withAllEmails(allEmails);
             contactCache.withAdded(contact);
         }
 
