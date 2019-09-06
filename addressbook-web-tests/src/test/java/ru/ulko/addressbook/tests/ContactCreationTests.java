@@ -41,7 +41,7 @@ public class ContactCreationTests extends TestBase {
                     .withEmail1("E-mail1").withEmail2("E-mail2").withEmail3("E-mail3").withGroup("test");
             app.contact().create(newContact);
             maxId++;
-            if (maxId == 0){
+            if (maxId == 0) {
                 maxId = app.contact().all().stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
             }
             newContact.withId(maxId);

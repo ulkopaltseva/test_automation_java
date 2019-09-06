@@ -17,7 +17,6 @@ public class ContactData {
     private String group;
 
 
-
     public String getAllPhones() {
         return allPhones;
     }
