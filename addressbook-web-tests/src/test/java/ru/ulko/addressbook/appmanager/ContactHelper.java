@@ -142,6 +142,13 @@ public class ContactHelper extends HelperBase {
                 .withEmail1(email1).withEmail2(email2).withEmail3(email3);
     }
 
+    public ContactData infoAddressFromAddedPage(ContactData contact) {
+        initModificationById(contact.getId());
+        String address = driver.findElement(By.name("address")).getText();
+        driver.navigate().back();
+        return new ContactData().withAddress(address);
+    }
+
 
     private Contacts contactCache = null;
 
@@ -170,6 +177,7 @@ public class ContactHelper extends HelperBase {
 
         return contactCache;
     }
+
 
 
 }
