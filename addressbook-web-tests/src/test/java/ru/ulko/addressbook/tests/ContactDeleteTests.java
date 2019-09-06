@@ -40,6 +40,6 @@ public class ContactDeleteTests extends TestBase {
 
         Contacts after = app.contact().all();
         app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        assertThat(after, equalTo(before.withRemoved(deletedContact)));
+        assertThat(after, equalTo(before.without(deletedContact)));
     }
 }
