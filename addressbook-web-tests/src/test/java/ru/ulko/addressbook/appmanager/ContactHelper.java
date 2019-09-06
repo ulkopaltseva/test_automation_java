@@ -101,7 +101,19 @@ public class ContactHelper extends HelperBase {
         contactCache = null;
     }
 
-    public ContactData allInfoFromEditForm(ContactData contact) {
+    private void initInfoCardOpen(int id){
+        driver.findElement(By.cssSelector(String.format("a[href='view.php?id=%s']", id))).click();
+    }
+
+    public ContactData infoFromCardForm(ContactData contact){
+        initInfoCardOpen(contact.getId());
+        String allInfo = driver.findElement(By.id("content")).getText();
+
+        driver.navigate().back();
+        return new ContactData().withAllInfo(allInfo);
+    }
+
+    public ContactData allInfoFromAddidForm(ContactData contact) {
         int id = contact.getId();
         initModificationById(id);
         String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
