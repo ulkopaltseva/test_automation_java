@@ -100,23 +100,32 @@ public class ContactHelper extends HelperBase {
     }
 
     public ContactData infoFromEditForm(ContactData contact) {
-        initModificationById(contact.getId());
+        int id = contact.getId();
+        initModificationById(id);
         String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
         String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
         String address = driver.findElement(By.name("address")).getAttribute("value");
-        String homePhone = driver.findElement(By.name("home")).getAttribute("value");
-        String mobilePhone = driver.findElement(By.name("mobile")).getAttribute("value");
-        String workPhone = driver.findElement(By.name("work")).getAttribute("value");
-        String faxPhone = driver.findElement(By.name("fax")).getAttribute("value");
+        String homePhone = clearPhone(driver.findElement(By.name("home")).getAttribute("value"));
+        String mobilePhone = clearPhone(driver.findElement(By.name("mobile")).getAttribute("value"));
+        String workPhone = clearPhone(driver.findElement(By.name("work")).getAttribute("value"));
+       // String faxPhone = driver.findElement(By.name("fax")).getAttribute("value");
         String email1 = driver.findElement(By.name("email")).getAttribute("value");
         String email2 = driver.findElement(By.name("email2")).getAttribute("value");
         String email3 = driver.findElement(By.name("email3")).getAttribute("value");
         driver.navigate().back();
-        return new ContactData().withFirstName(firstName).withLastName(lastName)
+        return new ContactData()
+                .withId(id).withFirstName(firstName).withLastName(lastName)
                 .withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone)
-                .withWorkPhone(workPhone).withFaxPhone(faxPhone).withEmail1(email1)
+                .withWorkPhone(workPhone).withEmail1(email1)
                 .withEmail2(email2).withEmail3(email3);
     }
+
+
+    private String clearPhone(String phone){
+        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
+    }
+
+
 
 
     private Contacts contactCache = null;
@@ -126,15 +135,31 @@ public class ContactHelper extends HelperBase {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
-        List<WebElement> rows = driver.findElements(By.tagName("tr"));
+        List<WebElement> rows = driver.findElements(By.name("entry"));
 
-        for (int i = 1; i < rows.size(); i++) {
-            int id = Integer.parseInt(rows.get(i).findElement(By.tagName("input")).getAttribute("value"));
-            String firstName = rows.get(i).findElement(By.xpath("td[3]")).getText();
-            String lastName = rows.get(i).findElement(By.xpath("td[2]")).getText();
-            ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withGroup("test");
-            contactCache.add(contact);
+        for (WebElement row: rows){
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
+            String firstName = cells.get(2).getText();
+            String lastName = cells.get(1).getText();
+            String address = cells.get(3).getText();
+            String[] allPhones = cells.get(5).getText().split("\n");
+            String homePhone = allPhones[0];
+            String mobilePhone = allPhones[1];
+            String workPhone = allPhones[2];
+            String[] allEmails = cells.get(4).getText().split("\n");
+            String email1 = allEmails[0];
+            String email2 = allEmails[1];
+            String email3 = allEmails[2];
+            ContactData contact = new ContactData()
+                    .withId(id).withFirstName(firstName).withLastName(lastName)
+                    .withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone)
+                    .withWorkPhone(workPhone).withEmail1(email1)
+                    .withEmail2(email2).withEmail3(email3);
+            contactCache.withAdded(contact);
         }
+
+
         return contactCache;
     }
 

@@ -26,10 +26,9 @@ public class ContactDeleteTests extends TestBase {
         app.goTo().homePage();
 
         if (app.contact().all().size() == 0) {
-            app.contact().create(new ContactData().withFirstName("First name").withLastName("Last Name")
-                    .withAddress("8 sovet street, 31").withHomePhone("home phone")
-                    .withMobilePhone("mobile phone").withWorkPhone("work phone")
-                    .withFaxPhone("fax phone").withEmail1("email").withEmail2("email2").withGroup("test"));
+            app.contact().create(new ContactData().withFirstName("First name").withLastName("Last Name").withAddress("8 sovetskaya 51/8, kv.14")
+                    .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
+                    .withEmail1("E-mail1").withEmail2("E-mail2").withEmail3("E-mail3").withGroup("test"));
         }
     }
 

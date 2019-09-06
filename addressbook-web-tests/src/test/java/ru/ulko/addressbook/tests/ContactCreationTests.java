@@ -14,7 +14,9 @@ public class ContactCreationTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
         app.goTo().groupPage();
-        app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
+        if (app.group().count() == 0) {
+            app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
+        }
         app.goTo().homePage();
     }
 
@@ -30,20 +32,20 @@ public class ContactCreationTests extends TestBase {
         }
 
         int countExistingElements = before.size();
-        int countCreatedElements = 2;
+        int countCreatedElements = 1;
         countCreatedElements++;
         for (int i = countExistingElements + 1; i < countCreatedElements + countExistingElements; i++) {
             ContactData newContact = new ContactData()
-                    .withFirstName("First name_" + i).withLastName("Last Name")
-                    .withAddress("8 sovet street, 31").withHomePhone("home phone").withMobilePhone("mobile phone")
-                    .withWorkPhone("work phone").withFaxPhone("fax phone")
-                    .withEmail1("email").withEmail2("email2").withGroup("test");
+                    .withFirstName("First name_" + i).withLastName("Last Name").withAddress("8 sovetskaya 51/8, kv.14")
+                    .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
+                    .withEmail1("E-mail1").withEmail2("E-mail2").withEmail3("E-mail3").withGroup("test");
             app.contact().create(newContact);
             maxId++;
             if (maxId == 0){
                 maxId = app.contact().all().stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
             }
             newContact.withId(maxId);
+            newContact.withClearPhone();
             differenceBeforeAfter.add(newContact);
         }
 
