@@ -132,6 +132,17 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public ContactData infoEmailFromAddedForm(ContactData contact) {
+        initModificationById(contact.getId());
+        String email1 = driver.findElement(By.name("email")).getAttribute("value");
+        String email2 = driver.findElement(By.name("email2")).getAttribute("value");
+        String email3 = driver.findElement(By.name("email3")).getAttribute("value");
+        driver.navigate().back();
+        return new ContactData()
+                .withEmail1(email1).withEmail2(email2).withEmail3(email3);
+    }
+
+
     private Contacts contactCache = null;
 
     public Contacts all() {
