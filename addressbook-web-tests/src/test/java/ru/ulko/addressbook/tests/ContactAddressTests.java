@@ -18,7 +18,7 @@ public class ContactAddressTests extends TestBase {
     public void ensurePrecondition(){
         app.goTo().homePage();
         if (app.contact().count() == 0){
-            app.contact().create(new ContactData().withAddress("rostovskay vulitsa"));
+            app.contact().create(new ContactData().withAddress("rostovskay vulitsa"), false);
         }
     }
 

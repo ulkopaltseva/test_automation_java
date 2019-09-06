@@ -23,7 +23,7 @@ public class ContactPhoneTests extends TestBase {
                     .withFirstName("testPhoneName").withLastName("testLastName")
                     .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
                     .withGroup("test");
-            app.contact().create(contact);
+            app.contact().create(contact, false);
         }
     }
 

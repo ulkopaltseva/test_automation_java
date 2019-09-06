@@ -39,7 +39,7 @@ public class ContactCreationTests extends TestBase {
                     .withFirstName("First name_" + i).withLastName("Last Name").withAddress("8 sovetskaya 51/8, kv.14")
                     .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
                     .withEmail1("E-mail1").withEmail2("E-mail2").withEmail3("E-mail3").withGroup("test");
-            app.contact().create(newContact);
+            app.contact().create(newContact, true);
             maxId++;
             if (maxId == 0) {
                 maxId = app.contact().all().stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();

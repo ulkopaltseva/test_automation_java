@@ -24,7 +24,7 @@ public class ContactEmailTests extends TestBase{
         if(app.contact().count() == 0){
             app.contact().create(new ContactData().withFirstName("testEmailFirstName")
             .withLastName("testEmailLastName")
-            .withEmail1("testEmail1").withEmail2("testEmail2").withEmail3("testEmail3"));
+            .withEmail1("testEmail1").withEmail2("testEmail2").withEmail3("testEmail3"), false);
         }
     }
 

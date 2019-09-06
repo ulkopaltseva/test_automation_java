@@ -20,7 +20,7 @@ public class ContactHelper extends HelperBase {
         super(driver);
     }
 
-    public void fillContactData(ContactData contactData, boolean creation) {
+    public void fillContactData(ContactData contactData, boolean creation, boolean needCreateGroup) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("address"), contactData.getAddress());
@@ -32,10 +32,12 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
 
-        if (creation == true) {
-            new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-        } else {
-            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        if (needCreateGroup) {
+            if (creation == true) {
+                new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            } else {
+                Assert.assertFalse(isElementPresent(By.name("new_group")));
+            }
         }
     }
 
@@ -59,9 +61,9 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
-    public void create(ContactData contact) {
+    public void create(ContactData contact, boolean createGroup) {
         initCreateContact();
-        fillContactData(contact, true);
+        fillContactData(contact, true, createGroup);
         submitCreationContact();
         returnHomePage();
         contactCache = null;
@@ -93,7 +95,7 @@ public class ContactHelper extends HelperBase {
 
     public void modifyById(ContactData oldContact, ContactData newContact) {
         initModificationById(oldContact.getId());
-        fillContactData(newContact, false);
+        fillContactData(newContact, false, true);
         submitModificationContact();
         returnHomePage();
         contactCache = null;
@@ -149,6 +151,28 @@ public class ContactHelper extends HelperBase {
         return new ContactData().withAddress(address);
     }
 
+
+    public ContactData contactById(int id) {
+        ContactData contact;
+        List<WebElement> rows = driver.findElements(By.name("entry"));
+
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            if (Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value")) == id) {
+                String firstName = cells.get(2).getText();
+                String lastName = cells.get(1).getText();
+                String address = cells.get(3).getText();
+                String allPhones = cells.get(5).getText();
+                String allEmails = cells.get(4).getText();
+                contact = new ContactData()
+                        .withId(id).withFirstName(firstName).withLastName(lastName)
+                        .withAddress(address).withAllPhones(allPhones)
+                        .withAllEmails(allEmails);
+                return contact;
+            }
+        }
+        return new ContactData();
+    }
 
     private Contacts contactCache = null;
 
