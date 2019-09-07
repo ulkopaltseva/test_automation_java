@@ -101,11 +101,11 @@ public class ContactHelper extends HelperBase {
         contactCache = null;
     }
 
-    private void initInfoCardOpen(int id){
+    private void initInfoCardOpen(int id) {
         driver.findElement(By.cssSelector(String.format("a[href='view.php?id=%s']", id))).click();
     }
 
-    public ContactData infoFromCardForm(ContactData contact){
+    public ContactData infoFromCardForm(ContactData contact) {
         initInfoCardOpen(contact.getId());
         String allInfo = driver.findElement(By.id("content")).getText();
 
@@ -213,7 +213,6 @@ public class ContactHelper extends HelperBase {
 
         return contactCache;
     }
-
 
 
 }

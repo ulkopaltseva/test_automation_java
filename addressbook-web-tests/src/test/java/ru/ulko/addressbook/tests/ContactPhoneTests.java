@@ -22,16 +22,16 @@ public class ContactPhoneTests extends TestBase {
         app.goTo().homePage();
 
         testContact = new ContactData()
-                    .withFirstName("testPhoneName").withLastName("testLastName")
-                    .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
-                    .withGroup("test");
-            app.contact().create(testContact, false);
+                .withFirstName("testPhoneName").withLastName("testLastName")
+                .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
+                .withGroup("test");
+        app.contact().create(testContact, false);
         testContact.withId(app.contact().all().stream()
                 .max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     }
 
     @AfterMethod
-    public void clearAfterTest(){
+    public void clearAfterTest() {
         app.contact().removeById(testContact);
         app.closeAlert();
     }

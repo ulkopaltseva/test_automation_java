@@ -19,7 +19,7 @@ public class ContactInfoCardTests extends TestBase {
     private ContactData testContact;
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensurePreconditions() {
         app.goTo().homePage();
         testContact = new ContactData()
                 .withFirstName("contactFirstName").withLastName("contactLastName")
@@ -32,13 +32,13 @@ public class ContactInfoCardTests extends TestBase {
     }
 
     @AfterMethod
-    public void clearAfterTests(){
+    public void clearAfterTests() {
         app.contact().removeById(testContact);
         app.closeAlert();
     }
 
     @Test
-    public void testContactInfoCard(){
+    public void testContactInfoCard() {
         ContactData contact = app.contact().contactById(testContact.getId());
         ContactData infoContactCard = app.contact().infoFromCardForm(contact);
         ContactData infoFromAddedForm = app.contact().infoPhoneFromEditForm(contact);
@@ -48,7 +48,7 @@ public class ContactInfoCardTests extends TestBase {
         MatcherAssert.assertThat(infoContactCard.getAllInfo(), equalTo(mergeAllinfo(contact)));
     }
 
-    private String mergeAllinfo(ContactData contact){
+    private String mergeAllinfo(ContactData contact) {
         String FirstNameAndLastName = contact.getFirstName() + " " + contact.getLastName();
         String address = contact.getAddress() + "\n";
         String homePhone = "H: " + contact.getHomePhone();
