@@ -77,7 +77,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void deleteById(ContactData deletedContact) {
+    public void removeById(ContactData deletedContact) {
         selectById(deletedContact.getId());
         deleteSelectedContact();
         contactCache = null;
@@ -134,7 +134,7 @@ public class ContactHelper extends HelperBase {
                 .withEmail2(email2).withEmail3(email3);
     }
 
-    public ContactData phoneInfoFromEditForm(ContactData contact) {
+    public ContactData infoPhoneFromEditForm(ContactData contact) {
         initModificationById(contact.getId());
         String homePhone = driver.findElement(By.name("home")).getAttribute("value");
         String mobilePhone = driver.findElement(By.name("mobile")).getAttribute("value");

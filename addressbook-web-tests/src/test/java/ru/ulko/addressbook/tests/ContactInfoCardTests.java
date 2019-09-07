@@ -6,6 +6,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.ContactData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+
 /**
  * Created by yulia on 06.09.2019.
  */
@@ -28,14 +33,30 @@ public class ContactInfoCardTests extends TestBase {
 
     @AfterMethod
     public void clearAfterTests(){
-        app.contact().deleteById(testContact);
+        app.contact().removeById(testContact);
         app.closeAlert();
     }
 
     @Test
     public void testContactInfoCard(){
         ContactData contact = app.contact().contactById(testContact.getId());
-        ContactData infoFromCard = app.contact().infoFromCardForm(contact);
-       // MatcherAssert.assertThat(infoFromCard.getAllInfo(), equals(mergeAllData(contact)));
+        ContactData infoContactCard = app.contact().infoFromCardForm(contact);
+        ContactData infoFromAddedForm = app.contact().infoPhoneFromEditForm(contact);
+        contact.withMobilePhone(infoFromAddedForm.getMobilePhone())
+                .withHomePhone(infoFromAddedForm.getHomePhone())
+                .withWorkPhone(infoFromAddedForm.getWorkPhone());
+        MatcherAssert.assertThat(infoContactCard.getAllInfo(), equalTo(mergeAllinfo(contact)));
+    }
+
+    private String mergeAllinfo(ContactData contact){
+        String FirstNameAndLastName = contact.getFirstName() + " " + contact.getLastName();
+        String address = contact.getAddress() + "\n";
+        String homePhone = "H: " + contact.getHomePhone();
+        String mobilePhone = "M: " + contact.getMobilePhone();
+        String workPhone = "W: " + contact.getWorkPhone();
+        String emails = "\n" + contact.getAllEmails();
+        return Arrays.asList(FirstNameAndLastName, address,
+                homePhone, mobilePhone, workPhone, emails)
+                .stream().collect(Collectors.joining("\n"));
     }
 }

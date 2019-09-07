@@ -31,7 +31,7 @@ public class ContactDeleteTests extends TestBase {
         Contacts before = app.contact().all();
         ContactData deletedContact = before.iterator().next();
 
-        app.contact().deleteById(deletedContact);
+        app.contact().removeById(deletedContact);
         app.closeAlert();
         app.contact().driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         app.goTo().homePageWithoutCheck();
