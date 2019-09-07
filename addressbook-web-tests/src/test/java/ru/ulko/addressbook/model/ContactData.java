@@ -1,5 +1,7 @@
 package ru.ulko.addressbook.model;
 
+import java.io.File;
+
 public class ContactData {
     private int id;
     private String firstName;
@@ -16,6 +18,16 @@ public class ContactData {
     private String allEmails;
     private String group;
     private String allInfo;
+    private File photo;
+
+    public File getPhoto(){
+        return this.photo;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     public String getAllInfo() {
         return allInfo;
@@ -183,6 +195,7 @@ public class ContactData {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
+
 
 
 }

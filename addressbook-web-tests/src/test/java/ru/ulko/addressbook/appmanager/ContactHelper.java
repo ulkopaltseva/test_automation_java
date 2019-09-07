@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.ulko.addressbook.model.ContactData;
 import ru.ulko.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail1());
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
+        attach(By.name("photo"), contactData.getPhoto());
 
         if (needCreateGroup) {
             if (creation == true) {
@@ -40,6 +42,7 @@ public class ContactHelper extends HelperBase {
             }
         }
     }
+
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));

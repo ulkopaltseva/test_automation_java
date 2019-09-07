@@ -6,6 +6,8 @@ import ru.ulko.addressbook.model.ContactData;
 import ru.ulko.addressbook.model.Contacts;
 import ru.ulko.addressbook.model.GroupData;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -22,6 +24,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test(enabled = true)
     public void testContactCreation() throws Exception {
+        File photo = new File("src/test/resources/cat.jpg");
         Contacts before = app.contact().all();
 
         Contacts differenceBeforeAfter = new Contacts();
@@ -38,7 +41,8 @@ public class ContactCreationTests extends TestBase {
             ContactData newContact = new ContactData()
                     .withFirstName("First name_" + i).withLastName("Last Name").withAddress("8 sovetskaya 51/8, kv.14")
                     .withHomePhone("555 55 55").withMobilePhone("+7(922)444 11 16").withWorkPhone("8(800)555 55 55")
-                    .withEmail1("E-mail1").withEmail2("E-mail2").withEmail3("E-mail3").withGroup("test");
+                    .withEmail1("E-mail1").withEmail2("E-mail2").withEmail3("E-mail3").withGroup("test")
+                    .withPhoto(photo);
             app.contact().create(newContact, true);
             maxId++;
             if (maxId == 0) {
