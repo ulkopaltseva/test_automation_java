@@ -8,7 +8,6 @@ import org.testng.Assert;
 import ru.ulko.addressbook.model.ContactData;
 import ru.ulko.addressbook.model.Contacts;
 
-import java.io.File;
 import java.util.List;
 
 /**

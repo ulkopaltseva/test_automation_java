@@ -23,16 +23,16 @@ public class GeneratorGroupsData {
 
     private static void saveFile(List<GroupData> groups, File file) throws IOException {
         Writer writer = new FileWriter(file);
-        for (GroupData group: groups){
+        for (GroupData group : groups) {
             writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader()
-            , group.getFooter()));
+                    , group.getFooter()));
         }
         writer.close();
     }
 
-    private static List<GroupData> generateGroups(int count){
+    private static List<GroupData> generateGroups(int count) {
         List<GroupData> groups = new ArrayList<>();
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             groups.add(new GroupData().withName(String.format("name_%s", i))
                     .withHeader(String.format("header_%s", i))
                     .withFooter(String.format("footer_%s", i)));

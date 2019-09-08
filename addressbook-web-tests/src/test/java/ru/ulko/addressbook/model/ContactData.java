@@ -20,7 +20,7 @@ public class ContactData {
     private String allInfo;
     private File photo;
 
-    public File getPhoto(){
+    public File getPhoto() {
         return this.photo;
     }
 
@@ -195,7 +195,6 @@ public class ContactData {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
-
 
 
 }
