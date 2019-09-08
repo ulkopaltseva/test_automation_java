@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 import ru.ulko.addressbook.model.Groups;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -15,16 +17,16 @@ public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
+        app.contact().driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         app.goTo().groupPage();
-
         if (app.group().all().size() == 0) {
             app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
         }
+        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
     @Test
     public void testGroupModification() {
-        ensurePreconditions();
         Groups before = app.group().all();
         GroupData oldGroup = before.iterator().next();
 

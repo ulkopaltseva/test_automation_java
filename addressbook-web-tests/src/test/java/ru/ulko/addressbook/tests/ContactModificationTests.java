@@ -6,6 +6,8 @@ import ru.ulko.addressbook.model.ContactData;
 import ru.ulko.addressbook.model.Contacts;
 import ru.ulko.addressbook.model.GroupData;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,7 +23,7 @@ public class ContactModificationTests extends TestBase {
             app.goTo().groupPage();
             app.group().createGroup(new GroupData().withName("test"));
         }
-
+        app.contact().driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         app.goTo().homePage();
         if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData().withFirstName("First name").withLastName("Last Name").withAddress("8 sovetskaya 51/8, kv.14")
@@ -33,9 +35,10 @@ public class ContactModificationTests extends TestBase {
     }
 
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testContactModification() {
         Contacts before = app.contact().all();
+        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         ContactData oldContact = before.iterator().next();
         ContactData newContact = new ContactData()
                 .withId(oldContact.getId()).withFirstName("name")

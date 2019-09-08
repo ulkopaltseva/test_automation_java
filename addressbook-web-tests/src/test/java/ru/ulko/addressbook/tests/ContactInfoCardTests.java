@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.ContactData;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -20,6 +21,7 @@ public class ContactInfoCardTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
+        app.contact().driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         app.goTo().homePage();
         testContact = new ContactData()
                 .withFirstName("contactFirstName").withLastName("contactLastName")
@@ -29,6 +31,7 @@ public class ContactInfoCardTests extends TestBase {
         app.contact().create(testContact, false);
         int id = app.contact().all().stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
         testContact.withId(id);
+        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
     @AfterMethod

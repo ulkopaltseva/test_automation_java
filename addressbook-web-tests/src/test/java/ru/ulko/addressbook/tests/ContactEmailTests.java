@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.ContactData;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -33,6 +34,9 @@ public class ContactEmailTests extends TestBase {
     public void clearAfterTest() {
         app.contact().removeById(testContact);
         app.closeAlert();
+        app.contact().driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        app.goTo().homePageWithoutCheck();
+        app.contact().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
     @Test
