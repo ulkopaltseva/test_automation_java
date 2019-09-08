@@ -1,16 +1,29 @@
 package ru.ulko.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.ulko.addressbook.model.GroupData;
 import ru.ulko.addressbook.model.Groups;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
+
+    @DataProvider
+    public Iterator<Object[]> validGroups(){
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{new GroupData().withName("test_1").withHeader("header_1").withFooter("footer_1")});
+        list.add(new Object[]{new GroupData().withName("test_2").withHeader("header_2").withFooter("footer_2")});
+        list.add(new Object[]{new GroupData().withName("test_3").withHeader("header_3").withFooter("footer_3")});
+        return list.iterator();
+    }
 
     @BeforeMethod
     public void ensurePreconditions() {
@@ -19,13 +32,17 @@ public class GroupCreationTests extends TestBase {
         app.group().driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
 
-    @Test(enabled = true)
-    public void testGroupCreation() throws Exception {
+    @Test(enabled = true, dataProvider = "validGroups")
+    public void testGroupCreation(GroupData group) throws Exception {
 
         Groups before = app.group().all();
 
         Groups differenceBeforeAfter = new Groups();
-        int countExistingElements = before.size();
+        app.group().createGroup(group);
+        int maxId = app.group().all().stream().mapToInt((g) -> g.getId()).max().getAsInt();
+        group.withId(maxId);
+        differenceBeforeAfter.add(group);
+       /* int countExistingElements = before.size();
         int countCreatedElements = 1;
         countCreatedElements++;
         for (int i = countExistingElements; i < countCreatedElements + countExistingElements; i++) {
@@ -34,7 +51,7 @@ public class GroupCreationTests extends TestBase {
             int maxId = app.group().all().stream().mapToInt((g) -> g.getId()).max().getAsInt();
             group.withId(maxId);
             differenceBeforeAfter.add(group);
-        }
+        }*/
 
         assertThat(app.group().count(), equalTo(before.size() + differenceBeforeAfter.size()));
 
