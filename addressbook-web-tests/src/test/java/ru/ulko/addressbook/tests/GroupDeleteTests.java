@@ -15,7 +15,7 @@ public class GroupDeleteTests extends TestBase {
         app.goTo().groupPage();
 
         if (app.group().all().size() == 0) {
-            app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
+            app.group().create(new GroupData().withName("test").withHeader("header").withFooter("footer"));
         }
     }
 

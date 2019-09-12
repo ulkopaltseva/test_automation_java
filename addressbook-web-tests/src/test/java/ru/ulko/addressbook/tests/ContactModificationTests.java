@@ -21,7 +21,7 @@ public class ContactModificationTests extends TestBase {
         app.goTo().groupPage();
         if (app.group().all().size() == 0) {
             app.goTo().groupPage();
-            app.group().createGroup(new GroupData().withName("test"));
+            app.group().create(new GroupData().withName("test"));
         }
         app.contact().driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         app.goTo().homePage();

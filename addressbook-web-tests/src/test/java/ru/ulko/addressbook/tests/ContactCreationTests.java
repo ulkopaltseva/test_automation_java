@@ -19,7 +19,7 @@ public class ContactCreationTests extends TestBase {
         app.contact().driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         app.goTo().groupPage();
         if (app.group().count() == 0) {
-            app.group().createGroup(new GroupData().withName("test").withHeader("header").withFooter("footer"));
+            app.group().create(new GroupData().withName("test").withHeader("header").withFooter("footer"));
         }
 
         app.goTo().homePage();
